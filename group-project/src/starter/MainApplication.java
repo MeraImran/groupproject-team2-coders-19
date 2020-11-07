@@ -1,11 +1,14 @@
 package starter;
+
 public class MainApplication extends GraphicsApplication {
 	public static final int WINDOW_WIDTH = 800;
 	public static final int WINDOW_HEIGHT = 600;
 	public static final String MUSIC_FOLDER = "sounds";
 	private static final String[] SOUND_FILES = { "r2d2.mp3", "somethinlikethis.mp3" };
 
-	private SomePane somePane;
+	private GamePane gamePane;
+	private ExitPane exitPane;
+	//private WinPane winPane;
 	private MenuPane menu;
 	private int count;
 
@@ -15,24 +18,32 @@ public class MainApplication extends GraphicsApplication {
 
 	public void run() {
 		System.out.println("Hello, world!");
-		somePane = new SomePane(this);
+		gamePane = new GamePane(this);
+		exitPane = new ExitPane(this);
+		//winPane = new WinPane(this);
 		menu = new MenuPane(this);
 		switchToMenu();
 	}
 
-	public void switchToMenu() {
-		playRandomSound();
+	public void switchToMenu() { //switches to menu screen
+		//playRandomSound();
 		count++;
 		switchToScreen(menu);
 	}
 
-	public void switchToSome() {
-		playRandomSound();
-		switchToScreen(somePane);
+	public void switchToGame() { //switches to game screen
+		//playRandomSound();
+		switchToScreen(gamePane);
+	}
+	
+	public void switchToExit() { //switches to exit screen
+		//playRandomSound();
+		switchToScreen(exitPane);
 	}
 
 	private void playRandomSound() {
 		AudioPlayer audio = AudioPlayer.getInstance();
 		audio.playSound(MUSIC_FOLDER, SOUND_FILES[count % SOUND_FILES.length]);
 	}
+
 }
