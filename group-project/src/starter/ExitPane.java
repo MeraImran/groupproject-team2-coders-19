@@ -1,6 +1,6 @@
 package starter;
 import java.awt.event.MouseEvent;
-
+import java.awt.Color;
 import acm.graphics.GImage;
 import acm.graphics.GObject;
 
@@ -10,11 +10,14 @@ public class ExitPane extends GraphicsPane {
 	private GImage img;
 	private GParagraph para;
 
-	public ExitPane(MainApplication app) {
+	public ExitPane(MainApplication app) {	
 		this.program = app;
-		img = new GImage("robot head.jpg", 100, 100);
-		para = new GParagraph("welcome\nto my\nsecret room!", 150, 300);
+		img = new GImage("alien.png", 100, 100);
+		img.setColor(Color.GREEN);  //  change the alien image color
+		
+		para = new GParagraph("Thanks for playing!", 150, 300);
 		para.setFont("Arial-24");
+		para.setColor(Color.YELLOW); // change the letter color
 	}
 
 	@Override
