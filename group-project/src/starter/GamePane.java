@@ -83,7 +83,15 @@ public class GamePane extends GraphicsPane implements ActionListener {
 
 	@Override
 	public void hideContents() {
-		//program.remove(img); //condition statement, if laser hits alien remove aline
+		for(int j = 0; j < colAliens; j++) {
+		//	if (laser[i].collides(colAliens)) {
+		//		program.remove();
+			//}
+		}
+		
+		//program.remove(img); //condition statement, if laser hits alien remove alien
+		
+		
 		//program.remove(para);
 	}
 
