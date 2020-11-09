@@ -45,5 +45,6 @@ public class MainApplication extends GraphicsApplication {
 		AudioPlayer audio = AudioPlayer.getInstance();
 		audio.playSound(MUSIC_FOLDER, SOUND_FILES[count % SOUND_FILES.length]);
 	}
+	
 
 }

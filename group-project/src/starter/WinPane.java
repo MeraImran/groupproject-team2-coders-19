@@ -1,4 +1,5 @@
 package starter;
+import java.awt.Color;
 import java.awt.event.MouseEvent;
 
 import acm.graphics.GImage;
@@ -13,8 +14,10 @@ public class WinPane extends GraphicsPane {
 	public WinPane(MainApplication app) {
 		this.program = app;
 		img = new GImage("robot head.jpg", 100, 100);
+		img.setColor(Color.CYAN);
 		para = new GParagraph("welcome\nto my\nsecret room!", 150, 300);
 		para.setFont("Arial-24");
+		para.setColor(Color.blue);
 	}
 
 	@Override
