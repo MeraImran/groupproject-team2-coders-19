@@ -12,10 +12,11 @@ public class ExitPane extends GraphicsPane {
 
 	public ExitPane(MainApplication app) {	
 		this.program = app;
-		img = new GImage("alien.png", 100, 100);
-		img.setColor(Color.GREEN);  //  change the alien image color
+	   app.setBackground(Color.BLACK);
+		img = new GImage("alien.png", 50, 100);
 		
-		para = new GParagraph("Thanks for playing!", 150, 300);
+		para = new GParagraph("Thanks for playing!", 300, 100);
+		
 		para.setFont("Arial-24");
 		para.setColor(Color.YELLOW); // change the letter color
 	}

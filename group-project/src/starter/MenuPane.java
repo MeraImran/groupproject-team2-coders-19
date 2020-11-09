@@ -24,14 +24,20 @@ public class MenuPane extends GraphicsPane {
 		play = new GButton("Start Game", 200, 200, 400, 75); //will probably implement program.getheight 
 		exit = new GButton("Exit Game", 200, 300, 400, 75); //so the coordinates aren't just random
 		title = new GLabel("Space Invaders", 125, 100);
-		title.setFont("Oswald-Bold-90");
+		title.setFont("ShowcardGothic-80");
+		title.setColor(Color.YELLOW);
+		
 		author = new GLabel("Created by Coders-19 (Team 2)", 150, 150);
 		author.setFont("Lato-36");
+		author.setColor(Color.WHITE);
+		
 		scoreboard = new GButton("Scoreboard", 150, 400, 500, 100);
 		alien = new GImage("alien.png", 225, 515);
 		alien.setSize(100, 75);
 		point = new GLabel("- 10 points", 350, 565);
 		point.setFont("Serif-50");
+	    point.setColor(Color.WHITE);
+		
 		play.setFillColor(Color.GREEN);
 		exit.setFillColor(Color.RED);
 		scoreboard.setFillColor(Color.ORANGE);
