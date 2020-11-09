@@ -52,7 +52,7 @@ public class GamePane extends GraphicsPane implements ActionListener {
 				aliens.get(i).get(j).move(xVelocity, yVelocity); //moves all the aliens together
 			}
 		}
-		System.out.println("Amount of aliens: " + amount);
+		//System.out.println("Amount of aliens: " + amount);
 	}
 	
 	private void drawAliens() {
