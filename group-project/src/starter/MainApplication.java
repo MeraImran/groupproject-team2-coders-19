@@ -18,7 +18,6 @@ public class MainApplication extends GraphicsApplication {
 
 	public void run() {
 		System.out.println("Hello, world!");
-		gamePane = new GamePane(this);
 		exitPane = new ExitPane(this);
 		//winPane = new WinPane(this);
 		menu = new MenuPane(this);
@@ -33,6 +32,7 @@ public class MainApplication extends GraphicsApplication {
 
 	public void switchToGame() { //switches to game screen
 		//playRandomSound();
+		gamePane = new GamePane(this);
 		switchToScreen(gamePane);
 	}
 	
