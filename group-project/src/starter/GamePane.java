@@ -29,7 +29,7 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 	private int yVelocity = 0;
 	
 	private Spaceship ship;
-	private Bullet bullet;
+	Rectangle bullet;
 	double dx = 0, x = 0, y = 0, velx = 0, vely = 0;
 	int playerX, playerY, bx, by;
 	boolean readyToFire, shot = false;
@@ -130,7 +130,7 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 		if (code == KeyEvent.VK_RIGHT) {
 			right();
 		}
-		if (key == KeyEvent.VK_SPACE) {
+		if (code == KeyEvent.VK_SPACE) {
 			if(bullet == null)
 				readyToFire = true;
 			if (readyToFire) {
@@ -142,6 +142,7 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 		}
 		repaint();
 	}
+
 	public void shoot() {
 		if(shot)
 			bullet.y--;
@@ -164,4 +165,7 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 				}
 			}
 	}
+	public boolean isFocusTraversable() {
+		return true;
+	}	
 }
