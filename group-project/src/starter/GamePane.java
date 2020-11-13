@@ -29,7 +29,10 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 	private int yVelocity = 0;
 	
 	private Spaceship ship;
-	double x = 0, y = 0, velx = 0, vely = 0;
+	private Bullet bullet;
+	double dx = 0, x = 0, y = 0, velx = 0, vely = 0;
+	int playerX, playerY, bx, by;
+	boolean readyToFire, shot = false;
 	int xPos, yPos;
 	
 	public GamePane(MainApplication app) {
@@ -127,7 +130,38 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 		if (code == KeyEvent.VK_RIGHT) {
 			right();
 		}
+		if (key == KeyEvent.VK_SPACE) {
+			if(bullet == null)
+				readyToFire = true;
+			if (readyToFire) {
+				by = playerY;
+				bx = playerX;
+				bullet = new Rectangle(bx, by, 3, 10);
+				shot = true;
+			}
+		}
+		repaint();
+	}
+	public void shoot() {
+		if(shot)
+			bullet.y--;
 	}
 	public void keyTyped(KeyEvent e) {}
-	public void keyReleased(KeyEvent e) {}
+	public void keyReleased(KeyEvent e) {
+			int key = e.getKeyCode();
+			if (key == KeyEvent.VK_LEFT) {
+				dx = 0;
+			}
+			if (key == KeyEvent.VK_RIGHT) {
+				dx = 0;
+			}
+			if (key == KeyEvent.VK_SPACE) {
+				readyToFire = false;
+				if(bullet.y <= -5) {
+					bullet = new Rectangle(0, 0, 0, 0);
+					shot = false;
+					readyToFire = true;
+				}
+			}
+	}
 }
