@@ -17,9 +17,8 @@ public abstract class Bullet implements Displayable {
         return yPosition;
     }
     
-    
 	/*
-	 * @Override public void draw(Graphics g) { g.setColor(red);
+	 * @Override public void draw(Graphics g) { g.setColor(Color.RED);
 	 * g.fillRect(this.getxPos(), this.getyPos(), 7, 15);
 	 * 
 	 * }
