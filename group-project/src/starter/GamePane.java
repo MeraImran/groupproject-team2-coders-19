@@ -106,8 +106,21 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 
 	
 	//Where Spaceship and Bullet Start
-	public void drawSpaceship() {
-		ship = new Spaceship(xPos, yPos);
+	public void drawSpaceship(Graphics g) {
+		playerX = 250;
+		playerY = 400;
+		//ship = new Spaceship(playerX, playerY);
+		setFocusTraversalKeysEnabled(false);
+		addKeyListener(this);
+		super.paintComponent(g);
+
+		g.setColor(Color.green);
+		g.fillRect(playerX, playerY, 50, 50);
+		
+		if(shot) {
+			g.setColor(Color.RED);
+			g.fillRect(bullet.x,  bullet.y,  bullet.width, bullet.height);
+		}
 	}
 	
 	public void actionPerformed2(ActionEvent e) {
@@ -140,7 +153,7 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 				shot = true;
 			}
 		}
-		repaint();
+		//repaint();
 	}
 
 	public void shoot() {
