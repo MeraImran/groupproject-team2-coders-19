@@ -20,7 +20,7 @@ public abstract class Bullet implements Displayable {
     
     @Override
     public void draw(Graphics g) {
-        g.setColor(red);
+        g.setColor(Color.RED);
         g.fillRect(this.getxPos(), this.getyPos(), 7, 15);
 
     }
