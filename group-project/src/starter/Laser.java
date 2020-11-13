@@ -25,7 +25,6 @@ public class Laser {
 	}
 	
 	public void tick() { //move the laser down
-		//y += 10;
 		laser.move(0, 40);
 	}
 	

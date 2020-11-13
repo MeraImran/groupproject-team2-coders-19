@@ -67,6 +67,7 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 	
 	public void actionPerformed(ActionEvent e) {
 		counter++;
+		
 		if (outOfBounds()) {
 			xVelocity *=-1;
 			yVelocity += 1;

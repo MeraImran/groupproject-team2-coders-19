@@ -26,7 +26,7 @@ public class Alien {
 	}
 	
 	public Laser addLaser() {
-		Laser tempLaser = new Laser(enemy.getX() + 25, enemy.getY() + 25);
+		Laser tempLaser = new Laser(enemy.getX() + 25, enemy.getY() + 30);
 		return tempLaser;
 	}
 	
