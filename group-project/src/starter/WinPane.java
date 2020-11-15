@@ -17,6 +17,7 @@ public class WinPane extends GraphicsPane {
 	private GButton exit;
 	private GImage alien;
 	private GButton menu;
+	
 
 
 
@@ -27,13 +28,12 @@ public class WinPane extends GraphicsPane {
 		para = new GParagraph("Your win! Congratulation!", 150, 300);
 		para.setFont("Arial-24");
 		para.setColor(Color.blue);
-		
-		// wining score borad
-	
+		exit = new GButton("Exit Game", 200, 300, 400, 75);
+		menu = new GButton("Return Menu", 200, 200, 400, 75);
+		// wining score board
+	    
 	}
-	public void scoreBorad() {
-		
-	}
+
 
 	@Override
 	public void showContents() {
@@ -55,7 +55,7 @@ public class WinPane extends GraphicsPane {
 	@Override
 	public void mousePressed(MouseEvent e) {
 		para.setText("Exit");
-	
+		para.setText("you need\nto click\non the eyes\nto go back");
 		para.setText("Play again");
 		GObject obj = program.getElementAt(e.getX(), e.getY());
 		if (obj == menu) {
