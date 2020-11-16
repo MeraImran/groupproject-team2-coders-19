@@ -7,25 +7,17 @@ import acm.graphics.GRect;
 
 public class Laser {
 	
+	private MainApplication program;
 	private GRect laser;
 	private double x;
 	private double y;
-	private Timer shoot;
 	
 	public Laser(double x, double y) {
-		laser = new GRect(x, y, 10, 50);
+		laser = new GRect(x, y, 5, 50);
 		laser.setFillColor(Color.YELLOW);
 		laser.setFilled(true);
 		this.x = x;
 		this.y = y;
-	}
-	
-	public void run() {
-		
-	}
-	
-	public void actionPerformed(ActionEvent e) {
-		
 	}
 	
 	public double getY() {
@@ -33,7 +25,7 @@ public class Laser {
 	}
 	
 	public void tick() { //move the laser down
-		laser.move(0, 100);
+		laser.move(0, program.LASER_SPEED);
 	}
 	
 	public GRect getImage() {
