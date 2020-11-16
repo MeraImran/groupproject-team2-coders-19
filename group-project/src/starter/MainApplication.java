@@ -10,8 +10,9 @@ public class MainApplication extends GraphicsApplication {
 
 	private GamePane gamePane;
 	private ExitPane exitPane;
-	//private WinPane winPane;
+	private WinPane winPane;
 	private MenuPane menu;
+	private LosePane losePane;
 	private int count;
 
 	public void init() {
@@ -21,11 +22,20 @@ public class MainApplication extends GraphicsApplication {
 	public void run() {
 		System.out.println("Hello, world!");
 		exitPane = new ExitPane(this);
-		//winPane = new WinPane(this);
 		menu = new MenuPane(this);
 		switchToMenu();
 	}
 
+	public void switchToWin() {
+		winPane = new WinPane(this);
+		switchToScreen(winPane);
+	}
+	
+	public void switchToLose() {
+		losePane = new LosePane(this);
+		switchToScreen(losePane);
+	}
+	
 	public void switchToMenu() { //switches to menu screen
 		//playRandomSound();
 		count++;

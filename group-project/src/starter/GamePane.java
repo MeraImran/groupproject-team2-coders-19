@@ -8,8 +8,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.Random;
+import java.util.TimerTask;
 
 import javax.swing.Timer;
 
@@ -40,11 +40,12 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 	int playerX, playerY, bx, by;
 	boolean readyToFire, shot = false;
 	int xPos, yPos;
+	private Graphics shoot;
 	
 	public GamePane(MainApplication app) {
 		this.program = app;
 		drawAliens();
-		//drawSpaceship();
+		drawSpaceship(shoot);
 		Timer someTimer = new Timer(1000, this);
 		someTimer.start();
 		addKeyListener(this);
@@ -93,6 +94,14 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 			temp.tick();
 		}
 
+		//if (amount == 0) { //condition for winning is when the player has killed all aliens
+			//program.switchToWin();
+		//}
+		
+		//else { //this condition will probably be when the aliens hit the bottom of screen or when spaceship has 0 lives
+			//program.switchToLose();
+		//}
+		
 	}
 	
 	private void drawAliens() {
@@ -119,6 +128,7 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 				program.add(aliens.get(i).get(j).getImage());
 			}
 		}
+		program.add(ship.getShipImg());
 	}
 
 	@Override
@@ -147,13 +157,12 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 	public void drawSpaceship(Graphics g) {
 		playerX = 250;
 		playerY = 400;
-		//ship = new Spaceship(playerX, playerY);
+		ship = new Spaceship(playerX, playerY);
 		setFocusTraversalKeysEnabled(false);
 		addKeyListener(this);
-		//super.paintComponent(g);
 
-		g.setColor(Color.green);
-		g.fillRect(playerX, playerY, 50, 50);
+		//g.setColor(Color.green);
+		//g.fillRect(playerX, playerY, 50, 50);
 		
 		if(shot) {
 			g.setColor(Color.RED);
@@ -219,4 +228,6 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 	public boolean isFocusTraversable() {
 		return true;
 	}	
+	
+	
 }
