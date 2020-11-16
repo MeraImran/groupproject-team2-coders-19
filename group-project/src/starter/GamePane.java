@@ -8,8 +8,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.Random;
+import java.util.TimerTask;
 
 import javax.swing.Timer;
 
@@ -45,7 +45,7 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 		this.program = app;
 		drawAliens();
 		//drawSpaceship();
-		Timer someTimer = new Timer(1000, this);
+		Timer someTimer = new Timer(2, this);
 		someTimer.start();
 		addKeyListener(this);
 		setFocusTraversalKeysEnabled(false);
