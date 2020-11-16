@@ -33,7 +33,7 @@ public class Laser {
 	}
 	
 	public void tick() { //move the laser down
-		laser.move(0, 2);
+		laser.move(0, 100);
 	}
 	
 	public GRect getImage() {

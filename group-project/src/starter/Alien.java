@@ -1,6 +1,7 @@
 package starter;
 
 
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.Timer;
 import acm.graphics.GImage;
@@ -22,6 +23,7 @@ public class Alien {
 		enemy.move(x, y);
 	}
 	
+	
 	/*
 	 * public void run() { shooting = new Timer(2, this); shooting.start(); }
 	 * 
@@ -32,9 +34,10 @@ public class Alien {
 	 * 
 	 * for (Laser temp: lasers) { temp.tick(); } }
 	 */
+	 
 	
 	public Laser addLaser() {
-		Laser tempLaser = new Laser(enemy.getX() + 25, enemy.getY() + 30);
+		Laser tempLaser = new Laser(enemy.getX() + 20, enemy.getY());
 		return tempLaser;
 	}
 	

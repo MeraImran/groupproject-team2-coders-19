@@ -2,7 +2,7 @@ package starter;
 
 import acm.graphics.*;
 
-public abstract class Spaceship implements Displayable {
+public class Spaceship {
 	private GImage ship;
 	int xPosition, yPosition;
 	
