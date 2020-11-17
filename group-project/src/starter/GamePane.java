@@ -30,10 +30,10 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 	private int amount;
 	private int xVelocity = 50;
 	private int yVelocity = 0;
-	private int counter;
+	private int LaserCounter = 0;
+	private int AlienCounter = 0;
 	Random r = new Random();
  
-	
 	private Spaceship ship;
 	Rectangle bullet;
 	double dx = 0, x = 0, y = 0, velx = 0, vely = 0;
@@ -46,7 +46,7 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 		this.program = app;
 		drawAliens();
 		drawSpaceship(shoot);
-		Timer someTimer = new Timer(1000, this);
+		Timer someTimer = new Timer(program.TIMER_SPEED, this);
 		someTimer.start();
 		addKeyListener(this);
 		setFocusTraversalKeysEnabled(false);
@@ -67,23 +67,30 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 	}
 	
 	public void actionPerformed(ActionEvent e) {
-		counter++;
 		
-		if (outOfBounds()) {
-			xVelocity *=-1;
-			yVelocity += 1;
-		}
-		for (int i = 0; i < program.ROW_ALIENS; i++) {
-			for (int j = 0; j < program.COLUMN_ALIENS; j++) {
-				aliens.get(i).get(j).move(xVelocity, yVelocity); //moves all the aliens together
-				
-			}
-		}
-		
+		LaserCounter++;
+		AlienCounter++;
 		int rowRand = r.nextInt(program.ROW_ALIENS);
 		int colRand = r.nextInt(program.COLUMN_ALIENS);
 		
-		if (counter %  2 == 0) {
+		if (outOfBounds()) {
+			xVelocity *=-1;
+			for (int i = 0; i < program.ROW_ALIENS; i++) {
+				for (int j = 0; j < program.COLUMN_ALIENS; j++) {
+					aliens.get(i).get(j).move(0, 1); //moves all the aliens together
+				}
+			}
+		}
+		
+		if (AlienCounter % program.MODULUS == 0) { //constant variable
+			for (int i = 0; i < program.ROW_ALIENS; i++) {
+				for (int j = 0; j < program.COLUMN_ALIENS; j++) {
+					aliens.get(i).get(j).move(xVelocity, yVelocity); //moves all the aliens together
+				}
+			}
+		}
+		
+		if (LaserCounter % program.MODULUS == 0) {
 			Laser tempLaser = aliens.get(rowRand).get(colRand).addLaser();
 			tempLaser.getImage().sendToBack();
 			lasers.add(tempLaser);
@@ -228,6 +235,5 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 	public boolean isFocusTraversable() {
 		return true;
 	}	
-	
 	
 }
