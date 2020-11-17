@@ -1,4 +1,5 @@
 package starter;
+import java.awt.Color;
 import java.awt.event.MouseEvent;
 
 import acm.graphics.GImage;
@@ -12,9 +13,10 @@ public class LosePane extends GraphicsPane {
 
 	public LosePane(MainApplication app) {
 		this.program = app;
-		img = new GImage("robot head.jpg", 100, 100);
-		para = new GParagraph("welcome\nto my\nsecret room!", 150, 300);
-		para.setFont("Arial-24");
+		img = new GImage("alien.png", 100, 100);
+		para = new GParagraph("GAME OVER!", 150, 300);
+		para.setFont("ShowcardGothic-60");
+		para.setColor(Color.YELLOW);
 	}
 
 	@Override
