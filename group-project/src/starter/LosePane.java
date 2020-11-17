@@ -14,8 +14,8 @@ public class LosePane extends GraphicsPane {
 	public LosePane(MainApplication app) {
 		this.program = app;
 		img = new GImage("alien.png", 100, 100);
-		para = new GParagraph("GAME OVER!", 150, 300);
-		para.setFont("ShowcardGothic-60");
+		para = new GParagraph("GAMEOVER!", 150, 300);
+		para.setFont("ShowcardGothic-50");
 		para.setColor(Color.YELLOW);
 	}
 
