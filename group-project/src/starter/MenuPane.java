@@ -21,8 +21,8 @@ public class MenuPane extends GraphicsPane {
 	public MenuPane(MainApplication app) {
 		super();
 		program = app;
-		play = new GButton("Start Game", 200, 200, 400, 75); //will probably implement program.getheight 
-		exit = new GButton("Exit Game", 200, 300, 400, 75); //so the coordinates aren't just random
+		play = new GButton("Start Game", program.WINDOW_WIDTH/4, program.WINDOW_HEIGHT/2 - 100, program.BUTTON_WIDTH, program.BUTTON_HEIGHT); 
+		exit = new GButton("Exit Game", program.WINDOW_WIDTH/4, program.WINDOW_HEIGHT/2, program.BUTTON_WIDTH, program.BUTTON_HEIGHT);
 		title = new GLabel("Space Invaders", 100, 100);
 		title.setFont("ShowcardGothic-80");
 		title.setColor(Color.YELLOW);

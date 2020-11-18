@@ -3,6 +3,8 @@ package starter;
 public class MainApplication extends GraphicsApplication {
 	public static final int WINDOW_WIDTH = 800;
 	public static final int WINDOW_HEIGHT = 600;
+	public static final int BUTTON_WIDTH = 400;
+	public static final int BUTTON_HEIGHT = 75;
 	public static final int ROW_ALIENS = 3;
 	public static final int COLUMN_ALIENS = 8;
 	public static final int TIMER_SPEED = 100;
