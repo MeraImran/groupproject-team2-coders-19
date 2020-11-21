@@ -10,6 +10,7 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Random;
 import javax.swing.Timer;
+import javax.swing.*;
 
 public class GamePane extends GraphicsPane implements ActionListener, KeyListener {
 	private MainApplication program; // you will use program to get access to
@@ -21,7 +22,7 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 	private int xCoordinate = 0; //move variables to mainapplication
 	private int yCoordinate = 10;
 	private int amount;
-	private int xVelocity = 50;
+	private int xVelocity = 5;
 	private int yVelocity = 0;
 	private int LaserCounter = 0;
 	private int AlienCounter = 0;
@@ -52,23 +53,18 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 	private boolean outOfBounds() {
 		for (int i = 0; i < program.ROW_ALIENS; i++) { 
 			for (int j = 0; j < program.COLUMN_ALIENS; j++) { 
-				if (aliens.get(i).get(j).getX() < 0 || aliens.get(i).get(j).getX() > program.WINDOW_WIDTH - 100) { 
+				if (aliens.get(i).get(j).getX() < 0 || aliens.get(i).get(j).getX() + aliens.get(i).get(j).getImage().getWidth() > program.WINDOW_WIDTH) { 
 					return true; 
 					}
 				}
 		  }
-		 
-		/*
-		 * double Alienx = enemy.getX(); if (Alienx < 0 || Alienx > program.WINDOW_WIDTH
-		 * - 100) { return true; }
-		 */
 		return false;
 	}
 	
 	private boolean bottomScreen() {
 		for (int i = 0; i < program.ROW_ALIENS; i++) { 
 			for (int j = 0; j < program.COLUMN_ALIENS; j++) { 
-				if (aliens.get(i).get(j).getY() == program.WINDOW_HEIGHT - 50) { 
+				if (aliens.get(i).get(j).getY() + aliens.get(i).get(j).getImage().getHeight() == program.WINDOW_HEIGHT) { 
 					return true; 
 					} 
 				}
@@ -76,7 +72,8 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 	}
 	
 	public void actionPerformed(ActionEvent e) {
-		
+		x += velx;
+		y += vely;
 		LaserCounter++;
 		AlienCounter++;
 		int rowRand = r.nextInt(program.ROW_ALIENS);
@@ -91,7 +88,7 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 			}
 		}
 		
-		if (AlienCounter % program.MODULUS == 0) { //constant variable
+		if (AlienCounter % program.ALIEN_MODULUS == 0) { //constant variable
 			for (int i = 0; i < program.ROW_ALIENS; i++) {
 				for (int j = 0; j < program.COLUMN_ALIENS; j++) {
 					aliens.get(i).get(j).move(xVelocity, yVelocity); //moves all the aliens together
@@ -99,7 +96,7 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 			}
 		}
 		
-		if (LaserCounter % program.MODULUS == 0) {
+		if (LaserCounter % program.LASER_MODULUS == 0) {
 			Laser tempLaser = aliens.get(rowRand).get(colRand).addLaser();
 			tempLaser.getImage().sendToBack();
 			lasers.add(tempLaser);
@@ -202,6 +199,7 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 	}
 	public void keyPressed(KeyEvent e) {
 		int code = e.getKeyCode();
+		System.out.println("its workin");
 		if (code == KeyEvent.VK_LEFT) {
 			left();
 		}
@@ -227,21 +225,21 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 	}
 	public void keyTyped(KeyEvent e) {}
 	public void keyReleased(KeyEvent e) {
-			int key = e.getKeyCode();
-			if (key == KeyEvent.VK_LEFT) {
-				dx = 0;
+		int key = e.getKeyCode();
+		if (key == KeyEvent.VK_LEFT) {
+			dx = 0;
+		}
+		if (key == KeyEvent.VK_RIGHT) {
+			dx = 0;
+		}
+		if (key == KeyEvent.VK_SPACE) {
+			readyToFire = false;
+			if(bullet.y <= -5) {
+				bullet = new Rectangle(0, 0, 0, 0);
+				shot = false;
+				readyToFire = true;
 			}
-			if (key == KeyEvent.VK_RIGHT) {
-				dx = 0;
-			}
-			if (key == KeyEvent.VK_SPACE) {
-				readyToFire = false;
-				if(bullet.y <= -5) {
-					bullet = new Rectangle(0, 0, 0, 0);
-					shot = false;
-					readyToFire = true;
-				}
-			}
+		}
 	}
 	public boolean isFocusTraversable() {
 		return true;
