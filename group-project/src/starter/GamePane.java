@@ -9,14 +9,8 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.TimerTask;
-
 import javax.swing.Timer;
-
-import acm.graphics.GImage;
-import acm.graphics.GObject;
-import acm.graphics.GOval;
-import acm.graphics.GRect;
+import javax.swing.*;
 
 public class GamePane extends GraphicsPane implements ActionListener, KeyListener {
 	private MainApplication program; // you will use program to get access to
@@ -28,11 +22,12 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 	private int xCoordinate = 0; //move variables to mainapplication
 	private int yCoordinate = 10;
 	private int amount;
-	private int xVelocity = 50;
+	private int xVelocity = 5;
 	private int yVelocity = 0;
 	private int LaserCounter = 0;
 	private int AlienCounter = 0;
 	Random r = new Random();
+	private Timer someTimer;
  
 	private Spaceship ship;
 	Rectangle bullet;
@@ -46,7 +41,7 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 		this.program = app;
 		drawAliens();
 		drawSpaceship(shoot);
-		Timer someTimer = new Timer(program.TIMER_SPEED, this);
+		someTimer = new Timer(program.TIMER_SPEED, this);
 		someTimer.start();
 		addKeyListener(this);
 		setFocusTraversalKeysEnabled(false);
@@ -56,18 +51,29 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 	private void addKeyListener(GamePane gamePane) {} // TODO Auto-generated method stub
 	
 	private boolean outOfBounds() {
-		for (int i = 0; i < program.ROW_ALIENS; i++) {
-			for (int j = 0; j < program.COLUMN_ALIENS; j++) {
-				if (aliens.get(i).get(j).getX() < 0 || aliens.get(i).get(j).getX() > program.WINDOW_WIDTH - 100) {
-					return true;		
+		for (int i = 0; i < program.ROW_ALIENS; i++) { 
+			for (int j = 0; j < program.COLUMN_ALIENS; j++) { 
+				if (aliens.get(i).get(j).getX() < 0 || aliens.get(i).get(j).getX() + aliens.get(i).get(j).getImage().getWidth() > program.WINDOW_WIDTH) { 
+					return true; 
+					}
 				}
-			}
-		}
+		  }
 		return false;
 	}
 	
+	private boolean bottomScreen() {
+		for (int i = 0; i < program.ROW_ALIENS; i++) { 
+			for (int j = 0; j < program.COLUMN_ALIENS; j++) { 
+				if (aliens.get(i).get(j).getY() + aliens.get(i).get(j).getImage().getHeight() == program.WINDOW_HEIGHT) { 
+					return true; 
+					} 
+				}
+		  } return false;
+	}
+	
 	public void actionPerformed(ActionEvent e) {
-		
+		x += velx;
+		y += vely;
 		LaserCounter++;
 		AlienCounter++;
 		int rowRand = r.nextInt(program.ROW_ALIENS);
@@ -77,12 +83,12 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 			xVelocity *=-1;
 			for (int i = 0; i < program.ROW_ALIENS; i++) {
 				for (int j = 0; j < program.COLUMN_ALIENS; j++) {
-					aliens.get(i).get(j).move(0, 1); //moves all the aliens together
+					aliens.get(i).get(j).move(0, 1); //moves all the aliens down 1
 				}
 			}
 		}
 		
-		if (AlienCounter % program.MODULUS == 0) { //constant variable
+		if (AlienCounter % program.ALIEN_MODULUS == 0) { //constant variable
 			for (int i = 0; i < program.ROW_ALIENS; i++) {
 				for (int j = 0; j < program.COLUMN_ALIENS; j++) {
 					aliens.get(i).get(j).move(xVelocity, yVelocity); //moves all the aliens together
@@ -90,7 +96,7 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 			}
 		}
 		
-		if (LaserCounter % program.MODULUS == 0) {
+		if (LaserCounter % program.LASER_MODULUS == 0) {
 			Laser tempLaser = aliens.get(rowRand).get(colRand).addLaser();
 			tempLaser.getImage().sendToBack();
 			lasers.add(tempLaser);
@@ -105,9 +111,11 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 			//program.switchToWin();
 		//}
 		
-		//else { //this condition will probably be when the aliens hit the bottom of screen or when spaceship has 0 lives
-			//program.switchToLose();
-		//}
+		if (bottomScreen()) { //this condition checks to see if the aliens hit the bottom of the screen
+			someTimer.stop(); 	//need to check when spaceship has 0 lives
+			program.removeAll();
+			program.switchToLose();
+		}
 		
 	}
 	
@@ -187,6 +195,7 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 	}
 	public void keyPressed(KeyEvent e) {
 		int code = e.getKeyCode();
+		System.out.println("its workin");
 		if (code == KeyEvent.VK_LEFT) {
 			left();
 		}
@@ -212,21 +221,21 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 	}
 	public void keyTyped(KeyEvent e) {}
 	public void keyReleased(KeyEvent e) {
-			int key = e.getKeyCode();
-			if (key == KeyEvent.VK_LEFT) {
-				dx = 0;
+		int key = e.getKeyCode();
+		if (key == KeyEvent.VK_LEFT) {
+			dx = 0;
+		}
+		if (key == KeyEvent.VK_RIGHT) {
+			dx = 0;
+		}
+		if (key == KeyEvent.VK_SPACE) {
+			readyToFire = false;
+			if(bullet.y <= -5) {
+				bullet = new Rectangle(0, 0, 0, 0);
+				shot = false;
+				readyToFire = true;
 			}
-			if (key == KeyEvent.VK_RIGHT) {
-				dx = 0;
-			}
-			if (key == KeyEvent.VK_SPACE) {
-				readyToFire = false;
-				if(bullet.y <= -5) {
-					bullet = new Rectangle(0, 0, 0, 0);
-					shot = false;
-					readyToFire = true;
-				}
-			}
+		}
 	}
 	public boolean isFocusTraversable() {
 		return true;
