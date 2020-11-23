@@ -148,10 +148,6 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 		}
 		
 		//program.remove(img); //condition statement, if laser hits alien remove alien
-		
-		
-
-		//program.remove(img); //condition statement, if laser hits alien remove alien
 
 		//program.remove(para);
 	//}
