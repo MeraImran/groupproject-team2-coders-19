@@ -153,12 +153,19 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 		//	if (laser[i].collides(colAliens)) {
 		//		program.remove();
 			//}
-		}
 		
 		//program.remove(img); //condition statement, if laser hits alien remove alien
-
 		//program.remove(para);
 	//}
+		
+if(shot) {
+	for(int i = 0; i <  program.COLUMN_ALIENS; i++) {
+		program.remove(i);
+	}
+}
+
+	}
+
 
 	@Override
 	public void mousePressed(MouseEvent e) { //Commands for spaceship will go here
