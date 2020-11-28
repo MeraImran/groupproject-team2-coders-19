@@ -15,6 +15,7 @@ import com.sun.org.apache.xml.internal.utils.CharKey;
 import java.lang.reflect.Constructor;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.Scanner;
 
 
 public class WinPane<Team> extends GraphicsPane {
@@ -27,11 +28,12 @@ public class WinPane<Team> extends GraphicsPane {
 	private GButton exit;
 	private GImage alien;
 	private GButton menu;
+	private GamePane score;
 	
 	//for scoreboard variable
 	
 	  private String title;
-	  private Map<String, Integer> scores;
+	  private ConcurrentHashMap<String, Integer> scores = new ConcurrentHashMap<String, Integer>();
 	  private Object obj;
 	  private java.util.List<Object> teams;
 	  private List removed;
@@ -45,8 +47,11 @@ public class WinPane<Team> extends GraphicsPane {
 	  
     //starter of scoreboard code
 	public void ScoreBoard() {
-		 this.title = setColor();
-		this.scores = new ConcurrentHashMap<>();
+		Scanner in = new Scanner(System.in);
+		this.title = setColor();
+		System.out.print("Enter Player Name: ");
+		title = in.nextLine();
+		scores.put(title, score.finalScore());
 		this.teams = Collections.synchronizedList(null);
 		//this removed have error
 		

@@ -10,6 +10,9 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Random;
 import javax.swing.Timer;
+
+import acm.graphics.GLabel;
+
 import javax.swing.*;
 
 public class GamePane extends GraphicsPane implements ActionListener, KeyListener {
@@ -26,6 +29,8 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 	private int yVelocity = 0;
 	private int LaserCounter = 0;
 	private int AlienCounter = 0;
+	private int currScore = 0, currLives = 3;
+	private GLabel currentLives = new GLabel ("Lives: " + currLives);
 	Random r = new Random();
 	private Timer someTimer;
  
@@ -53,10 +58,10 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 	private boolean outOfBounds() {
 		for (int i = 0; i < program.ROW_ALIENS; i++) { 
 			for (int j = 0; j < program.COLUMN_ALIENS; j++) { 
-				if (aliens.get(i).get(j).getX() < 0 || aliens.get(i).get(j).getX() + aliens.get(i).get(j).getImage().getWidth() > program.WINDOW_WIDTH) { 
+				if (aliens.get(i).get(j).getX() < 0 || aliens.get(i).get(j).getX() + aliens.get(i).get(j).getImage().getWidth() > program.WINDOW_WIDTH) {
 					return true; 
-					}
 				}
+			}
 		  }
 		return false;
 	}
@@ -112,11 +117,12 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 		//}
 		
 		if (bottomScreen()) { //this condition checks to see if the aliens hit the bottom of the screen
-			someTimer.stop(); 	//need to check when spaceship has 0 lives
-			program.removeAll();
-			program.switchToLose();
+			if(currLives == -1) {
+				someTimer.stop(); 	//need to check when spaceship has 0 lives
+				program.removeAll();
+				program.switchToLose();
+			}
 		}
-		
 	}
 	
 	private void drawAliens() {
@@ -144,26 +150,44 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 			}
 		}
 		program.add(ship.getShipImg());
+		currentLives.setFont("Lato-30");
+		currentLives.setColor(Color.WHITE);
+		program.add(currentLives, 50, 550);
 	}
 
 	@Override
 	public void hideContents() {
-// program
-		//for(int j = 0; j < colAliens; j++) {
-		//	if (laser[i].collides(colAliens)) {
-		//		program.remove();
-			//}
+		for(Laser temp : lasers) {
+			if (temp.getY() == ship.getxPos()) {
+				int tempX = ship.getxPos(), tempY = ship.getyPos();
+				program.remove(ship.getShipImg());
+				if(currLives != -1) {
+					currLives -= 1;
+					program.remove(currentLives);
+					currentLives = new GLabel ("Lives: "+currLives);
+				}
+				else {
+					return;
+				}
+				program.add(ship.getShipImg(), tempX, tempY);
+				program.add(currentLives, 150, 550);
+			}
+		}
 		
-		//program.remove(img); //condition statement, if laser hits alien remove alien
-		//program.remove(para);
-	//}
-		
-if(shot) {
-	for(int i = 0; i <  program.COLUMN_ALIENS; i++) {
-		program.remove(i);
-	}
-}
+		if(shot) {
+			for(int i = 0; i <  program.COLUMN_ALIENS; i++) {
+				currScore += 10;
+				program.remove(i);
+			}
+		}
 
+	}
+	
+	public int finalScore() {
+		if(amount == 0 || currLives == 0) {
+			return currScore;
+		}
+		return 0;
 	}
 
 
@@ -226,7 +250,9 @@ if(shot) {
 		if(shot)
 			bullet.y--;
 	}
+	
 	public void keyTyped(KeyEvent e) {}
+	
 	public void keyReleased(KeyEvent e) {
 		int key = e.getKeyCode();
 		if (key == KeyEvent.VK_LEFT) {
@@ -244,8 +270,9 @@ if(shot) {
 			}
 		}
 	}
+	
 	public boolean isFocusTraversable() {
 		return true;
-	}	
+	}
 	
 }
