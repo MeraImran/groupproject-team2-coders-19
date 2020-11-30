@@ -22,6 +22,11 @@ public class Spaceship {
 		return ship;
 	}
 	
+	public Laser addLaser() {
+		Laser tempLaser = new Laser(ship.getX() + 35, ship.getY());
+		return tempLaser;
+	}
+	
 	public void moveLeft() {
 		ship.move(-10, 0);
 	}

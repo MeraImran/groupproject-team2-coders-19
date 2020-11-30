@@ -24,7 +24,11 @@ public class Laser {
 		return y; 
 	}
 	
-	public void tick() { //move the laser down
+	public void tickUp() {
+		laser.move(0, -program.LASER_SPEED);
+	}
+	
+	public void tickDown() { //move the laser down
 		laser.move(0, program.LASER_SPEED);
 	}
 	

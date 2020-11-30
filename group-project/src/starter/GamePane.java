@@ -17,9 +17,10 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 										// all of the GraphicsProgram calls
 	
 	private ArrayList<ArrayList<Alien>> aliens;
-	private ArrayList<Laser> lasers = new ArrayList<Laser>();
+	private ArrayList<Laser> aLasers = new ArrayList<Laser>();
+	private ArrayList<Laser> sLasers = new ArrayList<Laser>();
 	private Alien enemy;
-	private int xCoordinate = 0; //move variables to mainapplication
+	private int xCoordinate = 0;
 	private int yCoordinate = 50;
 	private int amount;
 	private int xVelocity = 5;
@@ -101,12 +102,16 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 		if (LaserCounter % program.LASER_MODULUS == 0) {
 			Laser tempLaser = aliens.get(rowRand).get(colRand).addLaser();
 			tempLaser.getImage().sendToBack();
-			lasers.add(tempLaser);
+			aLasers.add(tempLaser);
 			program.add(tempLaser.getImage());
 		}
 		
-		for (Laser temp: lasers) {
-			temp.tick();
+		for (Laser temp: aLasers) {
+			temp.tickDown();
+		}
+		
+		for (Laser temp: sLasers) {
+			temp.tickUp();
 		}
 
 		//if (amount == 0) { //condition for winning is when the player has killed all aliens
@@ -154,7 +159,7 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 
 	@Override
 	public void hideContents() {
-		for(Laser temp : lasers) {
+		for(Laser temp : aLasers) {
 			if (temp.getY() == ship.getxPos()) {
 				int tempX = ship.getxPos(), tempY = ship.getyPos();
 				program.remove(ship.getShipImg());
@@ -186,13 +191,7 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 		}
 		return 0;
 	}
-
-
-	@Override
-	public void mousePressed(MouseEvent e) { //Commands for spaceship will go here
-	}
 	
-	//Where Spaceship and Bullet Start
 	public void drawSpaceship(Graphics g) {
 		ship = new Spaceship(program.SHIP_X, program.SHIP_Y);
 		setFocusTraversalKeysEnabled(false);
@@ -213,14 +212,14 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 			ship.moveRight();
 		}
 		if (code == KeyEvent.VK_SPACE) {
-			if(bullet == null)
-				readyToFire = true;
-			if (readyToFire) {
-				by = playerY;
-				bx = playerX;
-				bullet = new Rectangle(bx, by, 3, 10);
-				shot = true;
-			}
+			Laser tempLaser = ship.addLaser();
+			tempLaser.getImage().sendToBack();
+			sLasers.add(tempLaser);
+			program.add(tempLaser.getImage());
+			/*
+			 * if(bullet == null) readyToFire = true; if (readyToFire) { by = playerY; bx =
+			 * playerX; bullet = new Rectangle(bx, by, 3, 10); shot = true; }
+			 */
 		}
 	}
 
@@ -238,12 +237,10 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 			ship.moveRight();
 		}
 		if (key == KeyEvent.VK_SPACE) {
-			readyToFire = false;
-			if(bullet.y <= -5) {
-				bullet = new Rectangle(0, 0, 0, 0);
-				shot = false;
-				readyToFire = true;
-			}
+			/*
+			 * readyToFire = false; if(bullet.y <= -5) { bullet = new Rectangle(0, 0, 0, 0);
+			 * shot = false; readyToFire = true; }
+			 */
 		}
 	}
 	
