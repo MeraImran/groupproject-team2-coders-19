@@ -22,6 +22,14 @@ public class Spaceship {
 		return ship;
 	}
 	
+	public void moveLeft() {
+		ship.move(-10, 0);
+	}
+	
+	public void moveRight() {
+		ship.move(10, 0);
+	}
+	
     public int getxPos() {
         return xPosition;
     }

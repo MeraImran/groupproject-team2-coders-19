@@ -10,10 +10,7 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Random;
 import javax.swing.Timer;
-
 import acm.graphics.GLabel;
-
-import javax.swing.*;
 
 public class GamePane extends GraphicsPane implements ActionListener, KeyListener {
 	private MainApplication program; // you will use program to get access to
@@ -23,7 +20,7 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 	private ArrayList<Laser> lasers = new ArrayList<Laser>();
 	private Alien enemy;
 	private int xCoordinate = 0; //move variables to mainapplication
-	private int yCoordinate = 10;
+	private int yCoordinate = 50;
 	private int amount;
 	private int xVelocity = 5;
 	private int yVelocity = 0;
@@ -152,7 +149,7 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 		program.add(ship.getShipImg());
 		currentLives.setFont("Lato-30");
 		currentLives.setColor(Color.WHITE);
-		program.add(currentLives, 50, 550);
+		program.add(currentLives, 20, 40);
 	}
 
 	@Override
@@ -197,41 +194,23 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 	
 	//Where Spaceship and Bullet Start
 	public void drawSpaceship(Graphics g) {
-		playerX = 250;
-		playerY = 400;
-		ship = new Spaceship(playerX, playerY);
+		ship = new Spaceship(program.SHIP_X, program.SHIP_Y);
 		setFocusTraversalKeysEnabled(false);
 		addKeyListener(this);
-
-		//g.setColor(Color.green);
-		//g.fillRect(playerX, playerY, 50, 50);
 		
 		if(shot) {
 			g.setColor(Color.RED);
 			g.fillRect(bullet.x,  bullet.y,  bullet.width, bullet.height);
 		}
 	}
-	
-	public void actionPerformed2(ActionEvent e) {
-		x += velx;
-		y += vely;
-	}
-	public void left() {
-		velx = -1.5;
-		vely = 0;
-	}
-	public void right() {
-		velx = 0;
-		vely = 1.5;
-	}
+
 	public void keyPressed(KeyEvent e) {
 		int code = e.getKeyCode();
-		System.out.println("its workin");
 		if (code == KeyEvent.VK_LEFT) {
-			left();
+			ship.moveLeft();
 		}
 		if (code == KeyEvent.VK_RIGHT) {
-			right();
+			ship.moveRight();
 		}
 		if (code == KeyEvent.VK_SPACE) {
 			if(bullet == null)
@@ -243,23 +222,20 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 				shot = true;
 			}
 		}
-		//repaint();
 	}
 
 	public void shoot() {
 		if(shot)
 			bullet.y--;
 	}
-	
-	public void keyTyped(KeyEvent e) {}
-	
+		
 	public void keyReleased(KeyEvent e) {
 		int key = e.getKeyCode();
 		if (key == KeyEvent.VK_LEFT) {
-			dx = 0;
+			ship.moveLeft();
 		}
 		if (key == KeyEvent.VK_RIGHT) {
-			dx = 0;
+			ship.moveRight();
 		}
 		if (key == KeyEvent.VK_SPACE) {
 			readyToFire = false;
