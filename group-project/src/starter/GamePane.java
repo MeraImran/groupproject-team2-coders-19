@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Random;
 import javax.swing.Timer;
 import acm.graphics.GLabel;
+import acm.program.GraphicsProgram;
 
 public class GamePane extends GraphicsPane implements ActionListener, KeyListener {
 	private MainApplication program; // you will use program to get access to
@@ -74,6 +75,15 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 		  } return false;
 	}
 	
+	/*
+	 * private boolean alienHitShip() { for (int i = 0; i < program.ROW_ALIENS; i++)
+	 * { for (int j = 0; j < program.COLUMN_ALIENS; j++) { //if
+	 * (aliens.get(i).get(j).getX() == ship.getShipImg().getX()) { if
+	 * (getElementAt(aliens.get(i).get(j).getX(), aliens.get(i).get(j).getY()) ==
+	 * enemy) { System.out.println("Hit the spaceship"); return true; } } } return
+	 * false; }
+	 */
+	
 	public void actionPerformed(ActionEvent e) {
 		x += velx;
 		y += vely;
@@ -104,6 +114,7 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 			tempLaser.getImage().sendToBack();
 			aLasers.add(tempLaser);
 			program.add(tempLaser.getImage());
+			program.playAlienLaser();
 		}
 		
 		for (Laser temp: aLasers) {
@@ -117,6 +128,11 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 		//if (amount == 0) { //condition for winning is when the player has killed all aliens
 			//program.switchToWin();
 		//}
+		
+		/*
+		 * if (alienHitShip()) { someTimer.stop(); program.removeAll();
+		 * program.switchToLose(); }
+		 */
 		
 		if (bottomScreen()) { //this condition checks to see if the aliens hit the bottom of the screen
 			if(currLives == -1) {
@@ -161,6 +177,7 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 	public void hideContents() {
 		for(Laser temp : aLasers) {
 			if (temp.getY() == ship.getxPos()) {
+				System.out.println("hit alien");
 				int tempX = ship.getxPos(), tempY = ship.getyPos();
 				program.remove(ship.getShipImg());
 				if(currLives != -1) {
@@ -219,6 +236,7 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 			tempLaser.getImage().sendToBack();
 			sLasers.add(tempLaser);
 			program.add(tempLaser.getImage());
+			program.playShipLaser();
 			/*
 			 * if(bullet == null) readyToFire = true; if (readyToFire) { by = playerY; bx =
 			 * playerX; bullet = new Rectangle(bx, by, 3, 10); shot = true; }
