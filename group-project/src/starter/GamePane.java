@@ -176,14 +176,17 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 			}
 		}
 		
-		if(shot) {
-			for(int i = 0; i <  program.COLUMN_ALIENS; i++) {
+		if(aliens.getPos().getCol() == getPos().getCol() && aliens.getPos().getRow() == getPos().getRow()) {
+			
 				currScore += 10;
-				program.remove(i);
-			}
+				program.remove(aliens.get(xCoordinate).get(yCoordinate).getImage());
+			
 		}
-
-	}
+		
+		}
+	
+	
+	
 	
 	public int finalScore() {
 		if(amount == 0 || currLives == 0) {
