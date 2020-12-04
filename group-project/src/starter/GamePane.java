@@ -96,7 +96,7 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 	private boolean alienHitShip() { 
 		for (int i = 0; i < program.ROW_ALIENS; i++) { 
 			for (int j = 0; j < program.COLUMN_ALIENS; j++) { 
-				if (aliens.get(i).get(j).getY() + aliens.get(i).get(j).getImage().getHeight() == ship.getShipImg().getY()) {  
+				if ( !aliens.get(i).get(j).isDead() && aliens.get(i).get(j).getY() + aliens.get(i).get(j).getImage().getHeight() == ship.getShipImg().getY()) {  
 				  return true; } 
 			  } 
 		  } return false; 
@@ -164,8 +164,29 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 				program.switchToLose();
 			//}
 		}
+		checkAlienHitBox();
 	}
 	
+	private void checkAlienHitBox() {
+		// TODO Auto-generated method stub
+		for (int i = 0; i < program.ROW_ALIENS; i++) {
+			for (int j = 0; j < program.COLUMN_ALIENS; j++) {
+			ArrayList<Laser>temp=new ArrayList<Laser>();
+			for(Laser shipLaser:sLasers) {
+
+				if(shipLaser.getImage().getBounds().intersects(aliens.get(i).get(j).getImage().getBounds()) && !aliens.get(i).get(j).isDead()) {
+					program.remove(aliens.get(i).get(j).getImage());
+					aliens.get(i).get(j).setDead();
+					temp.add(shipLaser);
+					program.remove(shipLaser.getImage());
+				}
+			}
+			 
+			sLasers.removeAll(temp);
+		 }
+		 }
+	}
+
 	private void drawAliens() {
 		aliens = new ArrayList<>();
 		for (int i = 0; i < program.ROW_ALIENS; i++) {

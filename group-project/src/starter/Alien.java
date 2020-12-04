@@ -5,7 +5,7 @@ import acm.graphics.GImage;
 public class Alien {	
 	
 	private GImage enemy;
-	
+	private boolean isDead= false;
 	public Alien(int xCoordinate, int yCoordinate) {
 		enemy = new GImage("alien.png", xCoordinate, yCoordinate);
 		enemy.setSize(50,50);
@@ -30,5 +30,11 @@ public class Alien {
 	
 	public GImage getImage() {
 		return enemy;
+	}
+	public boolean isDead(){
+		return isDead;
+	}
+	public void setDead() {
+		isDead = true;
 	}
 }
