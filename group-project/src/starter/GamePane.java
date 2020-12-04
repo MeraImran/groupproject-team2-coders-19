@@ -75,14 +75,16 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 		  } return false;
 	}
 	
-	/*
-	 * private boolean alienHitShip() { for (int i = 0; i < program.ROW_ALIENS; i++)
-	 * { for (int j = 0; j < program.COLUMN_ALIENS; j++) { //if
-	 * (aliens.get(i).get(j).getX() == ship.getShipImg().getX()) { if
-	 * (getElementAt(aliens.get(i).get(j).getX(), aliens.get(i).get(j).getY()) ==
-	 * enemy) { System.out.println("Hit the spaceship"); return true; } } } return
-	 * false; }
-	 */
+	
+	private boolean alienHitShip() { 
+		for (int i = 0; i < program.ROW_ALIENS; i++) { 
+			for (int j = 0; j < program.COLUMN_ALIENS; j++) { 
+				if (aliens.get(i).get(j).getY() + aliens.get(i).get(j).getImage().getHeight() == ship.getShipImg().getY()) {  
+				  return true; } 
+			  } 
+		  } return false; 
+	}
+	 
 	
 	public void actionPerformed(ActionEvent e) {
 		x += velx;
@@ -129,17 +131,20 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 			//program.switchToWin();
 		//}
 		
-		/*
-		 * if (alienHitShip()) { someTimer.stop(); program.removeAll();
-		 * program.switchToLose(); }
-		 */
+		
+		if (alienHitShip()) { //checks to see if aliens hit the spaceship
+			someTimer.stop(); 
+			program.removeAll();
+			program.switchToLose(); 
+		}
+		
 		
 		if (bottomScreen()) { //this condition checks to see if the aliens hit the bottom of the screen
-			if(currLives == -1) {
-				someTimer.stop(); 	//need to check when spaceship has 0 lives
+			//if(currLives == -1) {
+				someTimer.stop(); 	
 				program.removeAll();
 				program.switchToLose();
-			}
+			//}
 		}
 	}
 	
