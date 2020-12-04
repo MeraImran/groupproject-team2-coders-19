@@ -10,86 +10,21 @@ import java.awt.List;
 
 import javax.swing.*;
 
-import com.sun.org.apache.xml.internal.utils.CharKey;
-
-import java.lang.reflect.Constructor;
-import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.Scanner;
 
 
-public class WinPane<Team> extends GraphicsPane {
+
+public class WinPane<Team, Scoreboard> extends GraphicsPane {
 
 	private MainApplication program; // you will use program to get access to
 										// all of the GraphicsProgram calls
 	private GImage img;
 	private GParagraph para;
-	private Alien Alien;
+	
 	private GButton exit;
-	private GImage alien;
 	private GButton menu;
 	private GamePane score;
-	
-	//for scoreboard variable
-	
-	  private String title;
-	  private ConcurrentHashMap<String, Integer> scores = new ConcurrentHashMap<String, Integer>();
-	  private Object obj;
-	  private java.util.List<Object> teams;
-	  private List removed;
-	  private Set<String> updated;
-	  
+	private Scoreboard scoreboard;
 
-	    private Class<?> gameProfileClass;
-	    private Constructor<?> gameProfileConstructor;
-	    private Constructor<?> craftOfflinePlayerConstructor;
-	
-	  
-    //starter of scoreboard code
-	public void ScoreBoard() {
-		Scanner in = new Scanner(System.in);
-		this.title = setColor();
-		System.out.print("Enter Player Name: ");
-		title = in.nextLine();
-		scores.put(title, score.finalScore());
-		this.teams = Collections.synchronizedList(null);
-		//this removed have error
-		
-		 this.scores = new ConcurrentHashMap<>();
-		  this.updated = Collections.synchronizedSet(new HashSet<>());
-	}
-
-
-	private String setColor() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	public boolean remove(Integer score, String text) {
-		return remove(score,text);
-	}
-	public void setTitle(String title) {
-        this.title = setColor();
-
-        if(obj != null) {
-        	//should change that
-        	obj.toString();
-        }
-          
-    }
-
-    public void update() {
-        if (updated.isEmpty()) {
-            return;
-        }
-
-        if (obj == null) {
-        	Object scoreboard;
-			// should change
-        	
-          return;
-        }
-    }
 
 
 	
@@ -103,6 +38,7 @@ public class WinPane<Team> extends GraphicsPane {
 		para.setColor(Color.blue);
 		exit = new GButton("Exit Game", 200, 300, 400, 75);
 		menu = new GButton("Return Menu", 200, 200, 400, 75);
+		
 		// wining score board
 	    
 	}
