@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Random;
 import javax.swing.Timer;
 import acm.graphics.GLabel;
+import acm.graphics.GRect;
 import acm.program.GraphicsProgram;
 
 public class GamePane extends GraphicsPane implements ActionListener, KeyListener {
@@ -40,6 +41,10 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 	boolean readyToFire, shot = false;
 	int xPos, yPos;
 	private Graphics shoot;
+
+	public static final int HITBOX_WIDTH = 2;
+	
+
 	
 	public GamePane(MainApplication app) {
 		this.program = app;
@@ -74,16 +79,16 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 				}
 		  } return false;
 	}
-	
-	/*
-	 * private boolean alienHitShip() { for (int i = 0; i < program.ROW_ALIENS; i++)
-	 * { for (int j = 0; j < program.COLUMN_ALIENS; j++) { //if
-	 * (aliens.get(i).get(j).getX() == ship.getShipImg().getX()) { if
-	 * (getElementAt(aliens.get(i).get(j).getX(), aliens.get(i).get(j).getY()) ==
-	 * enemy) { System.out.println("Hit the spaceship"); return true; } } } return
-	 * false; }
-	 */
-	
+ 
+		  /*
+			 * private boolean alienHitShip() { for (int i = 0; i < program.ROW_ALIENS; i++)
+			 * { for (int j = 0; j < program.COLUMN_ALIENS; j++) { //if
+			 * (aliens.get(i).get(j).getX() == ship.getShipImg().getX()) { if
+			 * (getElementAt(aliens.get(i).get(j).getX(), aliens.get(i).get(j).getY()) ==
+			 * enemy) { System.out.println("Hit the spaceship"); return true; } } } return
+			 * false; }
+			 */
+	 
 	public void actionPerformed(ActionEvent e) {
 		x += velx;
 		y += vely;
@@ -193,18 +198,27 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 			}
 		}
 		
-		if(aliens.getPos().getCol() == getPos().getCol() && aliens.getPos().getRow() == getPos().getRow()) {
+		
+		
+				for (int i = 0; i < program.ROW_ALIENS; i++)
+			 { for (int j = 0; j < program.COLUMN_ALIENS; j++) {  
+				
+			  if(aliens.get(xPos).get(i)==aliens.get(xPos).get(i) &&
+			     aliens.get(yPos).get(j)==aliens.get(yPos).get(j)) {  
+				  
+			 
+			  System.out.println("BOOOM");
+			  currScore += 10;
+			 
+			  }
+			 }
+			 }
 			
-				currScore += 10;
-				program.remove(aliens.get(xCoordinate).get(yCoordinate).getImage());
+				//program.remove(aliens.get(xCoordinate).get(yCoordinate).getImage());
+			  
 			
 		}
 		
-		}
-	
-	
-	
-	
 	public int finalScore() {
 		if(amount == 0 || currLives == 0) {
 			return currScore;
@@ -244,6 +258,9 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 		}
 	}
 
+	
+		
+		
 	public void shoot() {
 		if(shot)
 			bullet.y--;
