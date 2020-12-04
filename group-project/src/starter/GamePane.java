@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.Random;
 import javax.swing.Timer;
 import acm.graphics.GLabel;
+import acm.graphics.GRect;
+import acm.program.GraphicsProgram;
 
 public class GamePane extends GraphicsPane implements ActionListener, KeyListener {
 	private MainApplication program; // you will use program to get access to
@@ -29,6 +31,7 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 	private int AlienCounter = 0;
 	private int currScore = 0, currLives = 3;
 	private GLabel currentLives = new GLabel ("Lives: " + currLives);
+	private GLabel currentScore = new GLabel ("Score: " + currScore);
 	Random r = new Random();
 	private Timer someTimer;
  
@@ -39,6 +42,10 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 	boolean readyToFire, shot = false;
 	int xPos, yPos;
 	private Graphics shoot;
+
+	public static final int HITBOX_WIDTH = 2;
+	
+
 	
 	public GamePane(MainApplication app) {
 		this.program = app;
@@ -73,7 +80,33 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 				}
 		  } return false;
 	}
+
+ 
+		  /*
+			 * private boolean alienHitShip() { for (int i = 0; i < program.ROW_ALIENS; i++)
+			 * { for (int j = 0; j < program.COLUMN_ALIENS; j++) { //if
+			 * (aliens.get(i).get(j).getX() == ship.getShipImg().getX()) { if
+			 * (getElementAt(aliens.get(i).get(j).getX(), aliens.get(i).get(j).getY()) ==
+			 * enemy) { System.out.println("Hit the spaceship"); return true; } } } return
+			 * false; }
+			 */
+	 
+
 	
+	
+	private boolean alienHitShip() { 
+		for (int i = 0; i < program.ROW_ALIENS; i++) { 
+			for (int j = 0; j < program.COLUMN_ALIENS; j++) { 
+				if ( !aliens.get(i).get(j).isDead() && aliens.get(i).get(j).getY() + aliens.get(i).get(j).getImage().getHeight() == ship.getShipImg().getY()) {  
+					return true;
+				} 
+			} 
+		}
+		return false;
+	}
+	 
+	
+
 	public void actionPerformed(ActionEvent e) {
 		x += velx;
 		y += vely;
@@ -104,6 +137,7 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 			tempLaser.getImage().sendToBack();
 			aLasers.add(tempLaser);
 			program.add(tempLaser.getImage());
+			program.playAlienLaser();
 		}
 		
 		for (Laser temp: aLasers) {
@@ -118,15 +152,50 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 			//program.switchToWin();
 		//}
 		
+		
+		if (alienHitShip()) { //checks to see if aliens hit the spaceship
+			someTimer.stop(); 
+			program.removeAll();
+			program.switchToLose(); 
+		}
+		
+		
 		if (bottomScreen()) { //this condition checks to see if the aliens hit the bottom of the screen
-			if(currLives == -1) {
-				someTimer.stop(); 	//need to check when spaceship has 0 lives
+			//if(currLives == -1) {
+				someTimer.stop(); 	
 				program.removeAll();
 				program.switchToLose();
-			}
+			//}
 		}
+		checkAlienHitBox();
 	}
 	
+	private void checkAlienHitBox() {
+		// TODO Auto-generated method stub
+		for (int i = 0; i < program.ROW_ALIENS; i++) {
+			for (int j = 0; j < program.COLUMN_ALIENS; j++) {
+			ArrayList<Laser>temp=new ArrayList<Laser>();
+			for(Laser shipLaser:sLasers) {
+
+				if(shipLaser.getImage().getBounds().intersects(aliens.get(i).get(j).getImage().getBounds()) && !aliens.get(i).get(j).isDead()) {
+					currScore += 10;
+					program.remove(currentScore);
+					currentScore = new GLabel("Score: " + currScore);
+					currentScore.setFont("Lato-30");
+					currentScore.setColor(Color.WHITE);
+					program.add(currentScore, 650, 40);
+					program.remove(aliens.get(i).get(j).getImage());
+					aliens.get(i).get(j).setDead();
+					temp.add(shipLaser);
+					program.remove(shipLaser.getImage());
+				}
+			}
+			 
+			sLasers.removeAll(temp);
+		 }
+		 }
+	}
+
 	private void drawAliens() {
 		aliens = new ArrayList<>();
 		for (int i = 0; i < program.ROW_ALIENS; i++) {
@@ -155,18 +224,22 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 		currentLives.setFont("Lato-30");
 		currentLives.setColor(Color.WHITE);
 		program.add(currentLives, 20, 40);
+		currentScore.setFont("Lato-30");
+		currentScore.setColor(Color.WHITE);
+		program.add(currentScore, 675, 40);
 	}
 
 	@Override
 	public void hideContents() {
 		for(Laser temp : aLasers) {
 			if (temp.getY() == ship.getxPos()) {
+				System.out.println("hit alien");
 				int tempX = ship.getxPos(), tempY = ship.getyPos();
 				program.remove(ship.getShipImg());
 				if(currLives != -1) {
 					currLives -= 1;
 					program.remove(currentLives);
-					currentLives = new GLabel ("Lives: "+currLives);
+					currentLives = new GLabel ("Lives: "+ currLives);
 				}
 				else {
 					return;
@@ -174,17 +247,9 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 				program.add(ship.getShipImg(), tempX, tempY);
 				program.add(currentLives, 150, 550);
 			}
-		}
-		
-		if(shot) {
-			for(int i = 0; i <  program.COLUMN_ALIENS; i++) {
-				currScore += 10;
-				program.remove(i);
-			}
-		}
-
+		}	
 	}
-	
+		
 	public int finalScore() {
 		if(amount == 0 || currLives == 0) {
 			return currScore;
@@ -216,6 +281,7 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 			tempLaser.getImage().sendToBack();
 			sLasers.add(tempLaser);
 			program.add(tempLaser.getImage());
+			program.playShipLaser();
 			/*
 			 * if(bullet == null) readyToFire = true; if (readyToFire) { by = playerY; bx =
 			 * playerX; bullet = new Rectangle(bx, by, 3, 10); shot = true; }
@@ -223,6 +289,9 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 		}
 	}
 
+	
+		
+		
 	public void shoot() {
 		if(shot)
 			bullet.y--;
