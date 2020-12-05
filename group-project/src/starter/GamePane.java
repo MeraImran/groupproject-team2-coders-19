@@ -80,19 +80,6 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 		  } return false;
 	}
 
- 
-		  /*
-			 * private boolean alienHitShip() { for (int i = 0; i < program.ROW_ALIENS; i++)
-			 * { for (int j = 0; j < program.COLUMN_ALIENS; j++) { //if
-			 * (aliens.get(i).get(j).getX() == ship.getShipImg().getX()) { if
-			 * (getElementAt(aliens.get(i).get(j).getX(), aliens.get(i).get(j).getY()) ==
-			 * enemy) { System.out.println("Hit the spaceship"); return true; } } } return
-			 * false; }
-			 */
-	 
-
-	
-	
 	private boolean alienHitShip() { 
 		for (int i = 0; i < program.ROW_ALIENS; i++) { 
 			for (int j = 0; j < program.COLUMN_ALIENS; j++) { 
@@ -101,8 +88,6 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 			  } 
 		  } return false; 
 	}
-	 
-	
 
 	public void actionPerformed(ActionEvent e) {
 		x += velx;
