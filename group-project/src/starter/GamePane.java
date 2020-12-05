@@ -31,6 +31,7 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 	private int AlienCounter = 0;
 	private int currScore = 0, currLives = 3;
 	private GLabel currentLives = new GLabel ("Lives: " + currLives);
+	private GLabel currentScore = new GLabel ("Score: " + currScore);
 	Random r = new Random();
 	private Timer someTimer;
  
@@ -97,9 +98,11 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 		for (int i = 0; i < program.ROW_ALIENS; i++) { 
 			for (int j = 0; j < program.COLUMN_ALIENS; j++) { 
 				if ( !aliens.get(i).get(j).isDead() && aliens.get(i).get(j).getY() + aliens.get(i).get(j).getImage().getHeight() == ship.getShipImg().getY()) {  
-				  return true; } 
-			  } 
-		  } return false; 
+					return true;
+				} 
+			} 
+		}
+		return false;
 	}
 	 
 	
@@ -175,6 +178,12 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 			for(Laser shipLaser:sLasers) {
 
 				if(shipLaser.getImage().getBounds().intersects(aliens.get(i).get(j).getImage().getBounds()) && !aliens.get(i).get(j).isDead()) {
+					currScore += 10;
+					program.remove(currentScore);
+					currentScore = new GLabel("Score: " + currScore);
+					currentScore.setFont("Lato-30");
+					currentScore.setColor(Color.WHITE);
+					program.add(currentScore, 650, 40);
 					program.remove(aliens.get(i).get(j).getImage());
 					aliens.get(i).get(j).setDead();
 					temp.add(shipLaser);
@@ -215,6 +224,9 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 		currentLives.setFont("Lato-30");
 		currentLives.setColor(Color.WHITE);
 		program.add(currentLives, 20, 40);
+		currentScore.setFont("Lato-30");
+		currentScore.setColor(Color.WHITE);
+		program.add(currentScore, 675, 40);
 	}
 
 	@Override
@@ -227,7 +239,7 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 				if(currLives != -1) {
 					currLives -= 1;
 					program.remove(currentLives);
-					currentLives = new GLabel ("Lives: "+currLives);
+					currentLives = new GLabel ("Lives: "+ currLives);
 				}
 				else {
 					return;
@@ -235,28 +247,8 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 				program.add(ship.getShipImg(), tempX, tempY);
 				program.add(currentLives, 150, 550);
 			}
-		}
-		
-		
-		
-				for (int i = 0; i < program.ROW_ALIENS; i++)
-			 { for (int j = 0; j < program.COLUMN_ALIENS; j++) {  
-				
-			  if(aliens.get(xPos).get(i)==aliens.get(xPos).get(i) &&
-			     aliens.get(yPos).get(j)==aliens.get(yPos).get(j)) {  
-				  
-			 
-			  System.out.println("BOOOM");
-			  currScore += 10;
-			 
-			  }
-			 }
-			 }
-			
-				//program.remove(aliens.get(xCoordinate).get(yCoordinate).getImage());
-			  
-			
-		}
+		}	
+	}
 		
 	public int finalScore() {
 		if(amount == 0 || currLives == 0) {
