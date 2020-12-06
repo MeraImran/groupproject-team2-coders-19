@@ -22,9 +22,10 @@ public class WinPane<Team, Scoreboard> extends GraphicsPane {
 	
 	private GButton exit;
 	private GButton menu;
-	private GamePane score;
+	private GamePane gamePane;
 	private Scoreboard scoreboard;
-
+	private GButton savescore;
+	
 
 
 	
@@ -37,10 +38,11 @@ public class WinPane<Team, Scoreboard> extends GraphicsPane {
 		para.setFont("Arial-24");
 		para.setColor(Color.blue);
 		exit = new GButton("Exit Game", 200, 300, 400, 75);
-		menu = new GButton("Return Menu", 200, 200, 400, 75);
+		menu = new GButton("Return Menu", 200, 200, 400, 60);
+		savescore= new GButton("Save Score",200, 200, 400, 50);
+		//gamePane.
 		
-		// wining score board
-	    
+		
 	}
 
 
@@ -50,6 +52,7 @@ public class WinPane<Team, Scoreboard> extends GraphicsPane {
 		program.add(para);
 		program.add(exit);
 		program.add(menu);
+		program.add(savescore);
 		
 	}
 
@@ -59,13 +62,13 @@ public class WinPane<Team, Scoreboard> extends GraphicsPane {
 		program.remove(para);
 		program.remove(exit);
 		program.remove(menu);
+		program.remove(savescore);
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		para.setText("Exit");
 		para.setText("you need\nto click\non the eyes\nto go back");
-		para.setText("Play again");
+	
 		GObject obj = program.getElementAt(e.getX(), e.getY());
 		if (obj == menu) {
 			program.switchToMenu();
@@ -73,6 +76,10 @@ public class WinPane<Team, Scoreboard> extends GraphicsPane {
 		else if(obj==exit) {
 			program.switchToExit();
 		}
+		else if (obj==savescore) {
+			//scoreboard.initial
+		}
+		
 		
 		
 	}
