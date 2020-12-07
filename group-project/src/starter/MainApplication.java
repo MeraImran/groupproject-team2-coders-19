@@ -21,6 +21,7 @@ public class MainApplication extends GraphicsApplication {
 	private WinPane winPane;
 	private MenuPane menu;
 	private LosePane losePane;
+	//private Scoreboard scoreboard;
 	private int count;
 
 	public void init() {
@@ -61,6 +62,10 @@ public class MainApplication extends GraphicsApplication {
 		//playRandomSound();
 		switchToScreen(exitPane);
 	}
+	
+	//public void switchToScoreboard() {
+	//	switchToScreen(scoreboard);
+	//}
 
 	public void playRandomSound() {
 		AudioPlayer audio = AudioPlayer.getInstance();

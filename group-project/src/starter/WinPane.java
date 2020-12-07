@@ -28,82 +28,17 @@ public class WinPane<Team> extends GraphicsPane {
 	private GButton exit;
 	private GImage alien;
 	private GButton menu;
-	private GamePane score;
-	
-	//for scoreboard variable
-	
-	  private String title;
-	  private ConcurrentHashMap<String, Integer> scores = new ConcurrentHashMap<String, Integer>();
-	  private Object obj;
-	  private java.util.List<Object> teams;
-	  private List removed;
-	  private Set<String> updated;
-	  
 
-	    private Class<?> gameProfileClass;
-	    private Constructor<?> gameProfileConstructor;
-	    private Constructor<?> craftOfflinePlayerConstructor;
-	
-	  
-    //starter of scoreboard code
-	public void ScoreBoard() {
-		Scanner in = new Scanner(System.in);
-		this.title = setColor();
-		System.out.print("Enter Player Name: ");
-		title = in.nextLine();
-		scores.put(title, score.finalScore());
-		this.teams = Collections.synchronizedList(null);
-		//this removed have error
-		
-		 this.scores = new ConcurrentHashMap<>();
-		  this.updated = Collections.synchronizedSet(new HashSet<>());
-	}
-
-
-	private String setColor() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	public boolean remove(Integer score, String text) {
-		return remove(score,text);
-	}
-	public void setTitle(String title) {
-        this.title = setColor();
-
-        if(obj != null) {
-        	//should change that
-        	obj.toString();
-        }
-          
-    }
-
-    public void update() {
-        if (updated.isEmpty()) {
-            return;
-        }
-
-        if (obj == null) {
-        	Object scoreboard;
-			// should change
-        	
-          return;
-        }
-    }
-
-
-	
-	// winpane code
 	public WinPane(MainApplication app) {
 		this.program = app;
 		img = new GImage("robot head.jpg", 100, 100);
 		img.setColor(Color.CYAN);
-		para = new GParagraph("Your win! Congratulation!", 150, 300);
+		para = new GParagraph("You win! Congratulations!", 150, 300);
 		para.setFont("Arial-24");
 		para.setColor(Color.blue);
 		exit = new GButton("Exit Game", 200, 300, 400, 75);
 		menu = new GButton("Return Menu", 200, 200, 400, 75);
-		// wining score board
+		
 	    
 	}
 
