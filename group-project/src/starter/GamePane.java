@@ -24,18 +24,19 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 	private Alien enemy;
 	private int xCoordinate = 0;
 	private int yCoordinate = 50;
-	private int amount;
+	private int amount = 0;
 	private int xVelocity = 5;
 	private int yVelocity = 0;
 	private int LaserCounter = 0;
 	private int AlienCounter = 0;
 	private int currScore = 0, currLives = 3;
 	private GLabel currentLives = new GLabel ("Lives: " + currLives);
+	private GLabel currentScore = new GLabel ("Score: " + currScore);
 	Random r = new Random();
 	private Timer someTimer;
  
 	private Spaceship ship;
-	Rectangle bullet;
+	Rectangle bullet, spaceshipHitbox;
 	double dx = 0, x = 0, y = 0, velx = 0, vely = 0;
 	int playerX, playerY, bx, by;
 	boolean readyToFire, shot = false;
@@ -43,8 +44,6 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 	private Graphics shoot;
 
 	public static final int HITBOX_WIDTH = 2;
-	
-
 	
 	public GamePane(MainApplication app) {
 		this.program = app;
@@ -62,7 +61,7 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 	private boolean outOfBounds() {
 		for (int i = 0; i < program.ROW_ALIENS; i++) { 
 			for (int j = 0; j < program.COLUMN_ALIENS; j++) { 
-				if (aliens.get(i).get(j).getX() < 0 || aliens.get(i).get(j).getX() + aliens.get(i).get(j).getImage().getWidth() > program.WINDOW_WIDTH) {
+				if (aliens.get(i).get(j).getX() < 0 && !aliens.get(i).get(j).isDead() || !aliens.get(i).get(j).isDead() && aliens.get(i).get(j).getX() + aliens.get(i).get(j).getImage().getWidth() > program.WINDOW_WIDTH) {
 					return true; 
 				}
 			}
@@ -83,8 +82,9 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 	private boolean alienHitShip() { 
 		for (int i = 0; i < program.ROW_ALIENS; i++) { 
 			for (int j = 0; j < program.COLUMN_ALIENS; j++) { 
-				if ( !aliens.get(i).get(j).isDead() && aliens.get(i).get(j).getY() + aliens.get(i).get(j).getImage().getHeight() == ship.getShipImg().getY()) {  
-				  return true; } 
+				if (!aliens.get(i).get(j).isDead() && aliens.get(i).get(j).getY() + aliens.get(i).get(j).getImage().getHeight() == ship.getShipImg().getY()) {  
+				  return true; 
+				  } 
 			  } 
 		  } return false; 
 	}
@@ -115,11 +115,13 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 		}
 		
 		if (LaserCounter % program.LASER_MODULUS == 0) {
-			Laser tempLaser = aliens.get(rowRand).get(colRand).addLaser();
-			tempLaser.getImage().sendToBack();
-			aLasers.add(tempLaser);
-			program.add(tempLaser.getImage());
-			program.playAlienLaser();
+			if (!aliens.get(rowRand).get(colRand).isDead()) {
+				Laser tempLaser = aliens.get(rowRand).get(colRand).addLaser();
+				tempLaser.getImage().sendToBack();
+				aLasers.add(tempLaser);
+				program.add(tempLaser.getImage());
+				program.playAlienLaser();
+			}
 		}
 		
 		for (Laser temp: aLasers) {
@@ -130,46 +132,58 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 			temp.tickUp();
 		}
 
-		//if (amount == 0) { //condition for winning is when the player has killed all aliens
-			//program.switchToWin();
-		//}
+		if (amount == 0) { //condition for winning is when the player has killed all aliens
+			clearScreen();
+			program.switchToWin();
+		}
 		
-		
-		if (alienHitShip()) { //checks to see if aliens hit the spaceship
-			someTimer.stop(); 
-			program.removeAll();
+		if (currLives == 0) {
+			clearScreen();
 			program.switchToLose(); 
 		}
 		
+		if (alienHitShip()) {
+			clearScreen();
+			program.switchToLose();
+		}
 		
 		if (bottomScreen()) { //this condition checks to see if the aliens hit the bottom of the screen
-			//if(currLives == -1) {
-				someTimer.stop(); 	
-				program.removeAll();
-				program.switchToLose();
-			//}
+			clearScreen();
+			program.switchToLose();
 		}
+		
 		checkAlienHitBox();
+		hideContents(); 
+	}
+	
+	private void clearScreen() {
+		someTimer.stop();
+		program.removeAll();
 	}
 	
 	private void checkAlienHitBox() {
-		// TODO Auto-generated method stub
 		for (int i = 0; i < program.ROW_ALIENS; i++) {
 			for (int j = 0; j < program.COLUMN_ALIENS; j++) {
-			ArrayList<Laser>temp=new ArrayList<Laser>();
-			for(Laser shipLaser:sLasers) {
-
-				if(shipLaser.getImage().getBounds().intersects(aliens.get(i).get(j).getImage().getBounds()) && !aliens.get(i).get(j).isDead()) {
-					program.remove(aliens.get(i).get(j).getImage());
-					aliens.get(i).get(j).setDead();
-					temp.add(shipLaser);
-					program.remove(shipLaser.getImage());
+				ArrayList<Laser>temp=new ArrayList<Laser>();
+				for(Laser shipLaser:sLasers) {
+					if(shipLaser.getImage().getBounds().intersects(aliens.get(i).get(j).getImage().getBounds()) && !aliens.get(i).get(j).isDead() && amount != -1) {
+						currScore += 10;
+						program.remove(currentScore);
+						currentScore = new GLabel("Score: " + currScore);
+						currentScore.setFont("Lato-30");
+						currentScore.setColor(Color.WHITE);
+						program.add(currentScore, 650, 40);
+						program.remove(aliens.get(i).get(j).getImage());
+						//aliens.get(i).get(j);
+						aliens.get(i).get(j).setDead();
+						temp.add(shipLaser);
+						program.remove(shipLaser.getImage());
+						amount--;
+					}
 				}
-			}
-			 
 			sLasers.removeAll(temp);
-		 }
-		 }
+			}
+		}
 	}
 
 	private void drawAliens() {
@@ -200,48 +214,31 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 		currentLives.setFont("Lato-30");
 		currentLives.setColor(Color.WHITE);
 		program.add(currentLives, 20, 40);
+		currentScore.setFont("Lato-30");
+		currentScore.setColor(Color.WHITE);
+		program.add(currentScore, 650, 40);
 	}
 
 	@Override
 	public void hideContents() {
-		for(Laser temp : aLasers) {
-			if (temp.getY() == ship.getxPos()) {
-				System.out.println("hit alien");
-				int tempX = ship.getxPos(), tempY = ship.getyPos();
+		ArrayList<Laser>temp=new ArrayList<Laser>();
+		for(Laser alienLaser:aLasers) {
+			if(alienLaser.getImage().getBounds().intersects(ship.getShipImg().getBounds()) && currLives != -1) {
+				double tempX = ship.getxPos(), tempY = ship.getyPos();
+				currLives -= 1;
+				program.remove(currentLives);
+				currentLives = new GLabel ("Lives: "+ currLives);
+				currentLives.setFont("Lato-30");
+				currentLives.setColor(Color.WHITE);
+				program.add(currentLives, 20, 40);
 				program.remove(ship.getShipImg());
-				if(currLives != -1) {
-					currLives -= 1;
-					program.remove(currentLives);
-					currentLives = new GLabel ("Lives: "+currLives);
-				}
-				else {
-					return;
-				}
+				temp.add(alienLaser);
+				program.remove(alienLaser.getImage());
 				program.add(ship.getShipImg(), tempX, tempY);
-				program.add(currentLives, 150, 550);
 			}
 		}
-		
-		
-		
-				for (int i = 0; i < program.ROW_ALIENS; i++)
-			 { for (int j = 0; j < program.COLUMN_ALIENS; j++) {  
-				
-			  if(aliens.get(xPos).get(i)==aliens.get(xPos).get(i) &&
-			     aliens.get(yPos).get(j)==aliens.get(yPos).get(j)) {  
-				  
-			 
-			  System.out.println("BOOOM");
-			  currScore += 10;
-			 
-			  }
-			 }
-			 }
-			
-				//program.remove(aliens.get(xCoordinate).get(yCoordinate).getImage());
-			  
-			
-		}
+		aLasers.removeAll(temp);
+	}
 		
 	public int finalScore() {
 		if(amount == 0 || currLives == 0) {

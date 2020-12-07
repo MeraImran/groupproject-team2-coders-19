@@ -9,6 +9,7 @@ public class Spaceship {
 	public Spaceship (int xPos, int yPos) {
 		ship = new GImage("Spaceship.png", xPos, yPos);
 		ship.setSize(75, 75);
+		ship.setBounds(xPos, yPos, 75, 75);
 		this.xPosition = xPos;
 		this.yPosition = yPos;
 	}
@@ -29,10 +30,12 @@ public class Spaceship {
 	
 	public void moveLeft() {
 		ship.move(-10, 0);
+		ship.setBounds(ship.getX(), ship.getY(), 75, 75);
 	}
 	
 	public void moveRight() {
 		ship.move(10, 0);
+		ship.setBounds(ship.getX(), ship.getY(), 75, 75);
 	}
 	
     public int getxPos() {
