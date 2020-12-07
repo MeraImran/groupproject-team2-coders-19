@@ -62,10 +62,6 @@ public class MainApplication extends GraphicsApplication {
 		//playRandomSound();
 		switchToScreen(exitPane);
 	}
-	
-	//public void switchToScoreboard() {
-	//	switchToScreen(scoreboard);
-	//}
 
 	public void playRandomSound() {
 		AudioPlayer audio = AudioPlayer.getInstance();
