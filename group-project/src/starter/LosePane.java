@@ -10,11 +10,12 @@ public class LosePane extends GraphicsPane {
 										// all of the GraphicsProgram calls
 	private GImage img;
 	private GParagraph para;
+	private GamePane score;
 
 	public LosePane(MainApplication app) {
 		this.program = app;
 		img = new GImage("alien.png", 100, 100);
-		para = new GParagraph("GAMEOVER!", 150, 300);
+		para = new GParagraph("GAMEOVER! \n Your final Score was: " + score.finalScore(), 150, 300);
 		para.setFont("ShowcardGothic-50");
 		para.setColor(Color.YELLOW);
 	}
