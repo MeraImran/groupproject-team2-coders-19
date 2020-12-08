@@ -89,6 +89,10 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 			  } 
 		  } return false; 
 	}
+	
+	public int getScore() {
+		return currScore;
+	}
 
 	public void actionPerformed(ActionEvent e) {
 		x += velx;
@@ -135,7 +139,8 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 
 		if (amount == 0) { //condition for winning is when the player has killed all aliens
 			clearScreen();
-			program.switchToWin();
+			System.out.println(currScore);
+			program.switchToWin(currScore);
 		}
 		
 		if (currLives == 0) {
@@ -175,7 +180,6 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 						currentScore.setColor(Color.WHITE);
 						program.add(currentScore, 650, 40);
 						program.remove(aliens.get(i).get(j).getImage());
-						//aliens.get(i).get(j);
 						aliens.get(i).get(j).setDead();
 						temp.add(shipLaser);
 						program.remove(shipLaser.getImage());

@@ -18,7 +18,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.Scanner;
 
 
-public class WinPane<Team> extends GraphicsPane {
+public class WinPane extends GraphicsPane {
 
 	private MainApplication program; // you will use program to get access to
 										// all of the GraphicsProgram calls
@@ -29,18 +29,18 @@ public class WinPane<Team> extends GraphicsPane {
 	private GImage alien;
 	private GButton menu;
 	private GamePane score;
+	private int s;
 
-	public WinPane(MainApplication app) {
+	public WinPane(MainApplication app, int currScore) {
 		this.program = app;
+		s = currScore;
 		img = new GImage("robot head.jpg", 100, 100);
 		img.setColor(Color.CYAN);
-		para = new GParagraph("You win! You final score was:" + score.finalScore() + "Congratulations!", 150, 300);
+		para = new GParagraph("You win! You final score was:" + s + "Congratulations!", 150, 300);
 		para.setFont("Arial-24");
 		para.setColor(Color.blue);
 		exit = new GButton("Exit Game", 200, 300, 400, 75);
 		menu = new GButton("Return Menu", 200, 200, 400, 75);
-		
-	    
 	}
  
 

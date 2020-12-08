@@ -29,14 +29,14 @@ public class MainApplication extends GraphicsApplication {
 	}
 
 	public void run() {
-		System.out.println("Hello, world!");
+		//System.out.println("Hello, world!");
 		exitPane = new ExitPane(this);
 		menu = new MenuPane(this);
 		switchToMenu();
 	}
 
-	public void switchToWin() {
-		winPane = new WinPane(this);
+	public void switchToWin(int currScore) {
+		winPane = new WinPane(this, currScore);
 		switchToScreen(winPane);
 	}
 	
