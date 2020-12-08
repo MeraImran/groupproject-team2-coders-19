@@ -296,6 +296,7 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 			ship.moveRight();
 		}
 		if (key == KeyEvent.VK_SPACE) {
+			//System.out.println("Shot");
 			/*
 			 * readyToFire = false; if(bullet.y <= -5) { bullet = new Rectangle(0, 0, 0, 0);
 			 * shot = false; readyToFire = true; }
