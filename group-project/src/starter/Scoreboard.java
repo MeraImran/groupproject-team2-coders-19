@@ -37,7 +37,9 @@ public class Scoreboard extends Applet{
 		
 		highScore.setColor(Color.WHITE);
 		highScore.setFont("Lato-50");
-		app.add(highScore, 600, 200);
+		app.add(boardScore, 600, 200);
+		
+		displayList();
 		
 	}
 	
@@ -60,7 +62,7 @@ public class Scoreboard extends Applet{
 	
 	public void displayList() {
 		try {
-		      Scanner myReader = new Scanner(scoreFile);
+			Scanner myReader = new Scanner(scoreFile);
 		      while ((saved = myReader.nextLine())!= null) {
 		        String player = myReader.next();
 		        int score = myReader.nextInt();
@@ -73,13 +75,23 @@ public class Scoreboard extends Applet{
 		      e.printStackTrace();
 		    }
 		if(list.size() < 10) {
+			int tempNum = 220;
 			for(int i = 0; i < list.size(); i++) {
-				list.get(i).
+				GLabel tempName = new GLabel(list.get(i).getKey());
+				GLabel tempScore = new GLabel(list.get(i).getValue().toString());
+				program.add(tempName, 200, tempNum);
+				program.add(tempScore, 600, tempNum);
+				tempNum+=20;
 			}
 		}
 		else{
+			int tempNum = 220;
 			for(int i = 0; i < 10; i++) {
-				
+				GLabel tempName = new GLabel(list.get(i).getKey());
+				GLabel tempScore = new GLabel(list.get(i).getValue().toString());
+				program.add(tempName, 200, tempNum);
+				program.add(tempScore, 600, tempNum);
+				tempNum+=20;
 			}
 		}
 	}

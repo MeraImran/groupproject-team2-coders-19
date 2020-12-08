@@ -28,12 +28,13 @@ public class WinPane<Team> extends GraphicsPane {
 	private GButton exit;
 	private GImage alien;
 	private GButton menu;
+	private GamePane score;
 
 	public WinPane(MainApplication app) {
 		this.program = app;
 		img = new GImage("robot head.jpg", 100, 100);
 		img.setColor(Color.CYAN);
-		para = new GParagraph("You win! Congratulations!", 150, 300);
+		para = new GParagraph("You win! You final score was:" + score.finalScore() + "Congratulations!", 150, 300);
 		para.setFont("Arial-24");
 		para.setColor(Color.blue);
 		exit = new GButton("Exit Game", 200, 300, 400, 75);
@@ -41,7 +42,7 @@ public class WinPane<Team> extends GraphicsPane {
 		
 	    
 	}
-
+ 
 
 	@Override
 	public void showContents() {

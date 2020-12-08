@@ -14,7 +14,7 @@ public class MenuPane extends GraphicsPane {
 	private GButton exit;
 	private GLabel title;
 	private GLabel author;
-	private GButton scoreboard;
+	//private GButton scoreboard;
 	private GImage alien;
 	private GLabel point;
 	
@@ -23,7 +23,7 @@ public class MenuPane extends GraphicsPane {
 		program = app;
 		play = new GButton("Start Game", program.WINDOW_WIDTH/4, program.WINDOW_HEIGHT/2 - 100, program.BUTTON_WIDTH, program.BUTTON_HEIGHT); 
 		exit = new GButton("Exit Game", program.WINDOW_WIDTH/4, program.WINDOW_HEIGHT/2, program.BUTTON_WIDTH, program.BUTTON_HEIGHT);
-		scoreboard = new GButton ("See Scoreboard", program.WINDOW_WIDTH/4, program.WINDOW_HEIGHT/2 + 100, program.BUTTON_WIDTH, program.BUTTON_HEIGHT);
+		//scoreboard = new GButton ("See Scoreboard", program.WINDOW_WIDTH/4, program.WINDOW_HEIGHT/2 + 100, program.BUTTON_WIDTH, program.BUTTON_HEIGHT);
 		title = new GLabel("Space Invaders", 100, 100);
 		title.setFont("ShowcardGothic-80");
 		title.setColor(Color.YELLOW);
@@ -38,9 +38,9 @@ public class MenuPane extends GraphicsPane {
 		point.setFont("Serif-50");
 	    point.setColor(Color.WHITE);
 		
-		play.setFillColor(Color.GREEN);
-		exit.setFillColor(Color.RED);
-		scoreboard.setFillColor(Color.ORANGE);
+		//play.setFillColor(Color.GREEN);
+		//exit.setFillColor(Color.RED);
+		//scoreboard.setFillColor(Color.ORANGE);
 	}
 	
 	@Override
@@ -49,7 +49,7 @@ public class MenuPane extends GraphicsPane {
 		program.add(exit);
 		program.add(title);
 		program.add(author);
-		program.add(scoreboard);
+		//program.add(scoreboard);
 		program.add(alien);
 		program.add(point);
 	}
@@ -60,7 +60,7 @@ public class MenuPane extends GraphicsPane {
 		program.remove(exit);
 		program.remove(title);
 		program.remove(author);
-		program.remove(scoreboard);
+		//program.remove(scoreboard);
 		program.remove(alien);
 		program.remove(point);
 	}

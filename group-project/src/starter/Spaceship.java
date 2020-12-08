@@ -2,12 +2,15 @@ package starter;
 
 import acm.graphics.*;
 
+
 public class Spaceship {
-	private GImage ship;
+	private GImage ship, shipDeath;
 	int xPosition, yPosition;
 	
 	public Spaceship (int xPos, int yPos) {
 		ship = new GImage("Spaceship.png", xPos, yPos);
+		shipDeath = new GImage("explosion.png", xPos, yPos);
+		shipDeath.setSize(75, 75);
 		ship.setSize(75, 75);
 		ship.setBounds(xPos, yPos, 75, 75);
 		this.xPosition = xPos;
@@ -23,6 +26,10 @@ public class Spaceship {
 		return ship;
 	}
 	
+	public GImage getDeathImg() {
+		return shipDeath;
+	}
+	
 	public Laser addLaser() {
 		Laser tempLaser = new Laser(ship.getX() + 35, ship.getY());
 		return tempLaser;
@@ -36,6 +43,14 @@ public class Spaceship {
 	public void moveRight() {
 		ship.move(10, 0);
 		ship.setBounds(ship.getX(), ship.getY(), 75, 75);
+	}
+	
+	public double getXLocation() {
+		return ship.getX();
+	}
+	
+	public double getYLocation() {
+		return ship.getY();
 	}
 	
     public int getxPos() {

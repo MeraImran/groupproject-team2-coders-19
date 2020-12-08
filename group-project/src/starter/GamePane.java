@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.Random;
 import javax.swing.Timer;
@@ -224,7 +225,7 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 		ArrayList<Laser>temp=new ArrayList<Laser>();
 		for(Laser alienLaser:aLasers) {
 			if(alienLaser.getImage().getBounds().intersects(ship.getShipImg().getBounds()) && currLives != -1) {
-				double tempX = ship.getxPos(), tempY = ship.getyPos();
+				double tempX = ship.getXLocation(), tempY = ship.getYLocation();
 				currLives -= 1;
 				program.remove(currentLives);
 				currentLives = new GLabel ("Lives: "+ currLives);
