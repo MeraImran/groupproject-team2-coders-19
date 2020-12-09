@@ -19,11 +19,11 @@ public class Spaceship {
 		ship.setSize(75, 75);
 	}
 	
-	public double getX() {
+	public double getXLocation() {
 		return ship.getX();
 	}
-	
-	public double getY() {
+
+	public double getYLocation() {
 		return ship.getY();
 	}
 	

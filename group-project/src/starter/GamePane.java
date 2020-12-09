@@ -213,7 +213,7 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 		ArrayList<Laser>temp=new ArrayList<Laser>();
 		for(Laser alienLaser:aLasers) {
 			if(alienLaser.getImage().getBounds().intersects(ship.getShipImg().getBounds()) && currLives != -1) {
-				double tempX = ship.getxPos(), tempY = ship.getyPos();
+				double tempX = ship.getXLocation(), tempY = ship.getYLocation();
 				currLives -= 1;
 				program.remove(currentLives);
 				currentLives = new GLabel ("Lives: "+ currLives);
@@ -227,14 +227,6 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 			}
 		}
 		aLasers.removeAll(temp);
-	}
-	
-	public double getXLocation() {
-		return ship.getX();
-	}
-
-	public double getYLocation() {
-		return ship.getY();
 	}
 	
 	public int finalScore() {
