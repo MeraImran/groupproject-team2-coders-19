@@ -228,7 +228,15 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 		}
 		aLasers.removeAll(temp);
 	}
-		
+	
+	public double getXLocation() {
+		return ship.getX();
+	}
+
+	public double getYLocation() {
+		return ship.getY();
+	}
+	
 	public int finalScore() {
 		if(amount == 0 || currLives == 0) {
 			return currScore;

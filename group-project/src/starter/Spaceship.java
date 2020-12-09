@@ -19,6 +19,14 @@ public class Spaceship {
 		ship.setSize(75, 75);
 	}
 	
+	public double getX() {
+		return ship.getX();
+	}
+	
+	public double getY() {
+		return ship.getY();
+	}
+	
 	public GImage getShipImg() {
 		return ship;
 	}
