@@ -23,7 +23,6 @@ public class MenuPane extends GraphicsPane {
 		program = app;
 		play = new GButton("Start Game", program.WINDOW_WIDTH/4, program.WINDOW_HEIGHT/2 - 100, program.BUTTON_WIDTH, program.BUTTON_HEIGHT); 
 		exit = new GButton("Exit Game", program.WINDOW_WIDTH/4, program.WINDOW_HEIGHT/2, program.BUTTON_WIDTH, program.BUTTON_HEIGHT);
-		scoreboard = new GButton ("See Scoreboard", program.WINDOW_WIDTH/4, program.WINDOW_HEIGHT/2 + 100, program.BUTTON_WIDTH, program.BUTTON_HEIGHT);
 		title = new GLabel("Space Invaders", 100, 100);
 		title.setFont("ShowcardGothic-80");
 		title.setColor(Color.YELLOW);
@@ -31,7 +30,8 @@ public class MenuPane extends GraphicsPane {
 		author = new GLabel("Created by Coders-19 (Team 2)", 150, 150);
 		author.setFont("Lato-36");
 		author.setColor(Color.WHITE);
-
+		
+		scoreboard = new GButton("Scoreboard", 150, 400, 500, 100);
 		alien = new GImage("alien.png", 225, 515);
 		alien.setSize(100, 75);
 		point = new GLabel("- 10 points", 350, 565);
@@ -74,8 +74,5 @@ public class MenuPane extends GraphicsPane {
 		if (obj == exit) {
 			program.switchToExit(); //need to create exit screen for this condition
 		}
-		//if (obj == scoreboard) {
-		//	program.switchToScoreboard();
-		//}
 	}
 }

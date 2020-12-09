@@ -6,14 +6,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.util.Date;
 import java.util.ArrayList;
 import java.util.Random;
 import javax.swing.Timer;
 import acm.graphics.GLabel;
-import acm.graphics.GRect;
-import acm.program.GraphicsProgram;
 
 public class GamePane extends GraphicsPane implements ActionListener, KeyListener {
 	private MainApplication program; // you will use program to get access to
@@ -141,21 +137,15 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 			program.switchToLose(); 
 		}
 		
-		if (alienHitShip()) {
-			clearScreen();
-			program.switchToLose();
-		}
-		
 		if (bottomScreen()) { //this condition checks to see if the aliens hit the bottom of the screen
 			clearScreen();
 			program.switchToLose();
 		}
-		
 		checkAlienHitBox();
 		hideContents(); 
 	}
 	
-	private void clearScreen() {
+	public void clearScreen() {
 		someTimer.stop();
 		program.removeAll();
 	}
@@ -222,7 +212,7 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 		ArrayList<Laser>temp=new ArrayList<Laser>();
 		for(Laser alienLaser:aLasers) {
 			if(alienLaser.getImage().getBounds().intersects(ship.getShipImg().getBounds()) && currLives != -1) {
-				double tempX = ship.getXLocation(), tempY = ship.getYLocation();
+				double tempX = ship.getxPos(), tempY = ship.getyPos();
 				currLives -= 1;
 				program.remove(currentLives);
 				currentLives = new GLabel ("Lives: "+ currLives);
@@ -277,7 +267,6 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 			ship.moveRight();
 		}
 		if (key == KeyEvent.VK_SPACE) {
-			//System.out.println("Shot");
 			/*
 			 * readyToFire = false; if(bullet.y <= -5) { bullet = new Rectangle(0, 0, 0, 0);
 			 * shot = false; readyToFire = true; }

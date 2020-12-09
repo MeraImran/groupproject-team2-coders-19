@@ -1,69 +1,55 @@
 package starter;
 import java.awt.event.MouseEvent;
-
-import acm.graphics.GImage;
+import acm.graphics.GLabel;
 import acm.graphics.GObject;
-import javafx.print.PrintColor;
-
 import java.awt.*;
-import java.awt.List;
-
-import javax.swing.*;
-
-import com.sun.org.apache.xml.internal.utils.CharKey;
-
-import java.lang.reflect.Constructor;
-import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.Scanner;
-
 
 public class WinPane extends GraphicsPane {
 
-	private MainApplication program; // you will use program to get access to
-										// all of the GraphicsProgram calls
-	private GImage img;
-	private GParagraph para;
-	private GButton exit;
-	private GButton menu;
-	//private GamePane score;
-	private int s;
+   private MainApplication program;
+   private GLabel title;
+   private GLabel title1;
+   private GLabel title2;
+   private GButton exit;
+   private GButton menu;
+   private int s;
 
 	public WinPane(MainApplication app, int currScore) {
+		super();
 		this.program = app;
 		s = currScore;
-		img = new GImage("robot head.jpg", 100, 100);
-		img.setColor(Color.CYAN);
-		para = new GParagraph("You win! You final score was:" + s + "Congratulations!", 150, 300);
-		para.setFont("Arial-24");
-		para.setColor(Color.blue);
-		exit = new GButton("Exit Game", 200, 300, 400, 75);
-		menu = new GButton("Return Menu", 200, 200, 400, 75);
+		title = new GLabel("You win!",200, 100);
+		title.setFont("ShowcardGothic-80");
+		title.setColor(Color.green);
+		title1 = new GLabel("Your score: "+s,250,200);
+		title1.setFont("Arial-40");
+		title1.setColor(Color.white);
+		title2=new GLabel("Thanks For Playing!",230,500);
+		title2.setFont("Arial-40");
+		title2.setColor(Color.white);
+		exit = new GButton("Exit Game",  program.WINDOW_WIDTH/4, program.WINDOW_HEIGHT/4 + 200, program.BUTTON_WIDTH, program.BUTTON_HEIGHT);
+		exit.setFillColor(Color.ORANGE);
+		menu = new GButton("Return Menu",  program.WINDOW_WIDTH/4, program.WINDOW_HEIGHT/4+100, program.BUTTON_WIDTH, program.BUTTON_HEIGHT);
+		menu.setFillColor(Color.DARK_GRAY);
 	}
- 
-
-	@Override
+	
 	public void showContents() {
-		program.add(img);
-		program.add(para);
+		program.add(title1);
+		program.add(title);
 		program.add(exit);
 		program.add(menu);
-		
+		program.add(title2);
 	}
 
-	@Override
 	public void hideContents() {
-		program.remove(img);
-		program.remove(para);
+		program.remove(title2);
+	    program.remove(title1);
+		program.remove(title);
 		program.remove(exit);
 		program.remove(menu);
 	}
 
-	@Override
 	public void mousePressed(MouseEvent e) {
-		para.setText("Exit");
-		para.setText("you need\nto click\non the eyes\nto go back");
-		para.setText("Play again");
 		GObject obj = program.getElementAt(e.getX(), e.getY());
 		if (obj == menu) {
 			program.switchToMenu();
@@ -71,7 +57,5 @@ public class WinPane extends GraphicsPane {
 		else if(obj==exit) {
 			program.switchToExit();
 		}
-		
-		
 	}
-}
+	}

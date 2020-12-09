@@ -21,7 +21,6 @@ public class MainApplication extends GraphicsApplication {
 	private WinPane winPane;
 	private MenuPane menu;
 	private LosePane losePane;
-	//private Scoreboard scoreboard;
 	private int count;
 
 	public void init() {
@@ -29,14 +28,14 @@ public class MainApplication extends GraphicsApplication {
 	}
 
 	public void run() {
-		//System.out.println("Hello, world!");
+		System.out.println("Hello, world!");
 		exitPane = new ExitPane(this);
 		menu = new MenuPane(this);
 		switchToMenu();
 	}
 
-	public void switchToWin(int currScore) {
-		winPane = new WinPane(this, currScore);
+	public void switchToWin(int score) {
+		winPane = new WinPane(this, score);
 		switchToScreen(winPane);
 	}
 	
@@ -46,26 +45,17 @@ public class MainApplication extends GraphicsApplication {
 	}
 	
 	public void switchToMenu() { //switches to menu screen
-		//playRandomSound();
-		//playAlienLaser();
 		count++;
 		switchToScreen(menu);
 	}
 
 	public void switchToGame() { //switches to game screen
-		//playRandomSound();
 		gamePane = new GamePane(this);
 		switchToScreen(gamePane);
 	}
 	
 	public void switchToExit() { //switches to exit screen
-		//playRandomSound();
 		switchToScreen(exitPane);
-	}
-
-	public void playRandomSound() {
-		AudioPlayer audio = AudioPlayer.getInstance();
-		audio.playSound(MUSIC_FOLDER, SOUND_FILES[count % SOUND_FILES.length]);
 	}
 	
 	public void playAlienLaser() { 
