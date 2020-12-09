@@ -11,7 +11,6 @@ import java.awt.*;
 
 
 public class WinPane extends GraphicsPane {
-	// winpane code
 
    private MainApplication program;
    private GLabel title;
@@ -79,9 +78,7 @@ public class WinPane extends GraphicsPane {
 		else if(obj==exit) {
 			program.switchToExit();
 		}
-		//else if (obj==savescore) {
-			//program.switchToScoreboard();
-		//}
+
 		
 	}
 		
