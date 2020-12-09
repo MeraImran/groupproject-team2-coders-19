@@ -110,14 +110,15 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 		}
 		
 		if (LaserCounter % program.LASER_MODULUS == 0) {
-			if (!aliens.get(rowRand).get(colRand).isDead()) {
-				Laser tempLaser = aliens.get(rowRand).get(colRand).addLaser();
-				tempLaser.getImage().sendToBack();
-				aLasers.add(tempLaser);
-				program.add(tempLaser.getImage());
-				program.playAlienLaser();
+			while (aliens.get(rowRand).get(colRand).isDead()) {
+				rowRand = r.nextInt(program.ROW_ALIENS);
+				colRand = r.nextInt(program.COLUMN_ALIENS);
 			}
-			
+			Laser tempLaser = aliens.get(rowRand).get(colRand).addLaser();
+			tempLaser.getImage().sendToBack();
+			aLasers.add(tempLaser);
+			program.add(tempLaser.getImage());
+			program.playAlienLaser();
 		}
 		
 		for (Laser temp: aLasers) {

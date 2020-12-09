@@ -5,7 +5,7 @@ public class MainApplication extends GraphicsApplication {
 	public static final int WINDOW_HEIGHT = 600;
 	public static final int BUTTON_WIDTH = 400;
 	public static final int BUTTON_HEIGHT = 75;
-	public static final int ROW_ALIENS = 3;
+	public static final int ROW_ALIENS = 4;
 	public static final int COLUMN_ALIENS = 12;
 	public static final int TIMER_SPEED = 20; //bigger = slower, smaller = faster
 	public static final int ALIEN_MODULUS = 9;
