@@ -24,11 +24,9 @@ public class WinPane extends GraphicsPane {
 										// all of the GraphicsProgram calls
 	private GImage img;
 	private GParagraph para;
-	private Alien Alien;
 	private GButton exit;
-	private GImage alien;
 	private GButton menu;
-	private GamePane score;
+	//private GamePane score;
 	private int s;
 
 	public WinPane(MainApplication app, int currScore) {

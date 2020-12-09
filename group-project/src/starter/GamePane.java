@@ -40,8 +40,6 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 	Rectangle bullet, spaceshipHitbox;
 	double dx = 0, x = 0, y = 0, velx = 0, vely = 0;
 	int playerX, playerY, bx, by;
-	boolean readyToFire, shot = false;
-	int xPos, yPos;
 	private Graphics shoot;
 
 	public static final int HITBOX_WIDTH = 2;
@@ -89,10 +87,6 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 			  } 
 		  } return false; 
 	}
-	
-	public int getScore() {
-		return currScore;
-	}
 
 	public void actionPerformed(ActionEvent e) {
 		x += velx;
@@ -139,7 +133,6 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 
 		if (amount == 0) { //condition for winning is when the player has killed all aliens
 			clearScreen();
-			System.out.println(currScore);
 			program.switchToWin(currScore);
 		}
 		
@@ -256,11 +249,6 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 		ship = new Spaceship(program.SHIP_X, program.SHIP_Y);
 		setFocusTraversalKeysEnabled(false);
 		addKeyListener(this);
-		
-		if(shot) {
-			g.setColor(Color.RED);
-			g.fillRect(bullet.x,  bullet.y,  bullet.width, bullet.height);
-		}
 	}
 
 	public void keyPressed(KeyEvent e) {
@@ -277,19 +265,7 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 			sLasers.add(tempLaser);
 			program.add(tempLaser.getImage());
 			program.playShipLaser();
-			/*
-			 * if(bullet == null) readyToFire = true; if (readyToFire) { by = playerY; bx =
-			 * playerX; bullet = new Rectangle(bx, by, 3, 10); shot = true; }
-			 */
 		}
-	}
-
-	
-		
-		
-	public void shoot() {
-		if(shot)
-			bullet.y--;
 	}
 		
 	public void keyReleased(KeyEvent e) {
@@ -307,10 +283,6 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 			 * shot = false; readyToFire = true; }
 			 */
 		}
-	}
-	
-	public boolean isFocusTraversable() {
-		return true;
 	}
 	
 }
