@@ -117,6 +117,7 @@ public class GamePane extends GraphicsPane implements ActionListener, KeyListene
 				program.add(tempLaser.getImage());
 				program.playAlienLaser();
 			}
+			
 		}
 		
 		for (Laser temp: aLasers) {

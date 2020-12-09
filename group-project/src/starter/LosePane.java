@@ -13,8 +13,8 @@ public class LosePane extends GraphicsPane {
 
 	public LosePane(MainApplication app) {
 		this.program = app;
-		img = new GImage("alien.png", 100, 100);
-		para = new GParagraph("GAMEOVER!", 150, 300);
+		img = new GImage("alien.png", 50, 100);
+		para = new GParagraph("GAMEOVER!", 250, 100);
 		para.setFont("ShowcardGothic-50");
 		para.setColor(Color.YELLOW);
 	}
@@ -33,7 +33,6 @@ public class LosePane extends GraphicsPane {
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		para.setText("you need\nto click\non the eyes\nto go back");
 		GObject obj = program.getElementAt(e.getX(), e.getY());
 		if (obj == img) {
 			program.switchToMenu();
